@@ -3,8 +3,10 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
+  const navigate = useNavigate();
 
   // Demo UI Data
   const items = [
@@ -27,7 +29,7 @@ function Cart() {
   );
 
   const handleCheckout = () => {
-    alert("Checkout UI only");
+    navigate("/checkout");
   };
 
   // Empty Cart UI
