@@ -1,30 +1,36 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { Sparkles, Eye, EyeOff } from "lucide-react";
+import { loginUser } from "../Redux/Slice/AuthSlice";
+import { fetchUserCart } from "../Redux/Slice/CartSlice";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [formData, setFormData] =
-    useState({
-      email: "",
-      password: "",
-    });
+  const { user, loading, error, message } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
 
-  const [showPassword, setShowPassword] =
-    useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const updateField = (
-    field,
-    value
-  ) => {
+  const updateField = (field, value) => {
     setFormData({
       ...formData,
       [field]: value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Login UI only");
+    const resultAction = await dispatch(loginUser(formData));
+    if (loginUser.fulfilled.match(resultAction)) {
+      dispatch(fetchUserCart());
+      navigate("/");
+    }
   };
 
   return (
@@ -139,14 +145,18 @@ function Login() {
                 Remember me
               </label>
 
-              <button
-                type="button"
-                className="text-yellow-700 hover:text-yellow-800"
+              <Link
+                to="/forgot-password"
+                className="text-yellow-700 hover:text-yellow-800 font-medium"
               >
                 Forgot Password?
-              </button>
+              </Link>
 
             </div>
+            {error && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+                {error}
+                </div>)}
 
             {/* Button */}
             <button
@@ -164,7 +174,7 @@ function Login() {
               Don’t have an account?{" "}
 
               <Link
-                to="/signup"
+                to="/verify-email"
                 className="text-yellow-700 hover:text-yellow-800 font-medium"
               >
                 Create Account

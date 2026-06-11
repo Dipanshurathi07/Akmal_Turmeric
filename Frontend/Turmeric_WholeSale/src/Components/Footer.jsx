@@ -13,7 +13,7 @@ export default function Footer() {
             <div className="flex items-center gap-2 mb-5">
               <Sparkles className="text-yellow-400" size={28} />
               <h2 className="text-2xl font-medium text-white">
-                Golden Harvest
+                Paka Nafsa Trading Private Limited
               </h2>
             </div>
 

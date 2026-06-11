@@ -6,13 +6,16 @@ import {
   Send,
 } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {useSelector,useDispatch} from "react-redux"
+import { submitContactForm } from "../Redux/Slice/ContactSlice";
 
 function Contact() {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    company: "",
-    phone: "",
+    phoneNumber: "",
     message: "",
   });
 
@@ -25,7 +28,14 @@ function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Contact UI only");
+    dispatch(submitContactForm(formData));
+    alert("Your message has been sent successfully!");
+    setFormData({
+      name: "",
+      email: "",
+      phoneNumber: "",
+      message: "",
+    });
   };
 
   return (
@@ -99,26 +109,6 @@ function Contact() {
                 />
               </div>
 
-              {/* Company */}
-              <div>
-                <label className="block mb-2 font-medium">
-                  Company Name
-                </label>
-
-                <input
-                  type="text"
-                  value={formData.company}
-                  onChange={(e) =>
-                    updateField(
-                      "company",
-                      e.target.value
-                    )
-                  }
-                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                  placeholder="Your Company Ltd."
-                />
-              </div>
-
               {/* Phone */}
               <div>
                 <label className="block mb-2 font-medium">
@@ -127,10 +117,10 @@ function Contact() {
 
                 <input
                   type="tel"
-                  value={formData.phone}
+                  value={formData.phoneNumber}
                   onChange={(e) =>
                     updateField(
-                      "phone",
+                      "phoneNumber",
                       e.target.value
                     )
                   }

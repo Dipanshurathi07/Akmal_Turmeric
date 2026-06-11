@@ -8,16 +8,32 @@ import Cart from './Pages/Cart'
 import Checkout from './Pages/Checkout'
 import OrderConfirmation from './Pages/OrderConfirmation'
 import Contact from './Pages/Contact'
+import Orders from './Pages/Orders'
+import ForgotPassword from './Pages/ForgotPassword'
+import OtpVerification from './Pages/OtpVerification'
+import VerifyEmail from './Pages/VerifyEmail'
 import UserLayout from './Layout/UserLayout'
 import Products from './Pages/Products'
+import ProductDetails from './Pages/ProductDetails'
+import ResetPassword from './Pages/ResetPassword'
 import AdminLayout from './Layout/AdminLayout'
 import AdminDashboard from './Pages/Admin/AdminDashboard'
 import ManageProducts from './Pages/Admin/ManageProducts'
 import ManageOrders from './Pages/Admin/ManageOrders'
 import ManageUsers from './Pages/Admin/ManageUsers'
-import Reports from './Pages/Admin/Reports'
+// import Reports from './Pages/Admin/Reports'
+import OrderDetails from './Pages/OrderDetails'
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getCurrentUser } from "./Redux/Slice/AuthSlice";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log("kro yaar")
+    dispatch(getCurrentUser());
+  }, [dispatch]);
+
   return (
     <Routes>
       {/* User Routes */}
@@ -25,11 +41,20 @@ function App() {
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
+        <Route path="register" element={<Signup />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="verify-email" element={<VerifyEmail />} />
+        <Route path="verify-otp" element={<OtpVerification />} />
+        <Route path="reset-password" element={<ResetPassword />} />
         <Route path="cart" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="order-confirmation" element={<OrderConfirmation />} />
+        <Route path="order-confirmation/:orderId" element={<OrderConfirmation />} />
+        <Route path="orders" element={<Orders />} />
+        <Route path="orders/:orderId" element={<OrderDetails />} />
         <Route path="contact" element={<Contact />} />
         <Route path="products" element={<Products />} />
+        <Route path="products/:productId" element={<ProductDetails />} />
       </Route>
 
       {/* Admin Routes */}
@@ -39,7 +64,7 @@ function App() {
         <Route path="products" element={<ManageProducts />} />
         <Route path="orders" element={<ManageOrders />} />
         <Route path="users" element={<ManageUsers />} />
-        <Route path="reports" element={<Reports />} />
+        {/* <Route path="reports" element={<Reports />} /> */}
       </Route>
     </Routes>
   )

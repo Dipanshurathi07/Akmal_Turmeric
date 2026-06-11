@@ -1,18 +1,36 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react"
+import { fetchAllUsers } from '../../Redux/Slice/AdminSlice';
+import { fetchAllProducts } from '../../Redux/Slice/ProductSlice';
+import Products from '../Products';
+import { getAllOrders } from '../../Redux/Slice/OrderSlice'
+
 
 const AdminDashboard = () => {
+  const { users }  = useSelector((state)=>state.admin);
+  const { products } = useSelector((state)=>state.products);
+  const { allOrders, loading, error } = useSelector((state) => state.order);
+  
+  const dispatch = useDispatch();
   const [stats, setStats] = useState({
     totalUsers: 1250,
     totalProducts: 345,
     totalOrders: 892,
     totalRevenue: 45000,
   })
+  useEffect(()=>{
+    dispatch(fetchAllUsers());
+    dispatch(fetchAllProducts());
+    dispatch(getAllOrders());
+    console.log(allOrders,"all orders")
+  },[dispatch]);
 
-  const [recentOrders, setRecentOrders] = useState([
-    { id: 1, customer: 'John Doe', amount: 5000, status: 'Completed', date: '2025-05-30' },
-    { id: 2, customer: 'Jane Smith', amount: 3500, status: 'Pending', date: '2025-05-29' },
-    { id: 3, customer: 'Ahmed Khan', amount: 7200, status: 'Shipping', date: '2025-05-28' },
-  ])
+  // const [recentOrders, setRecentOrders] = useState([
+  //   { id: 1, customer: 'John Doe', amount: 5000, status: 'Completed', date: '2025-05-30' },
+  //   { id: 2, customer: 'Jane Smith', amount: 3500, status: 'Pending', date: '2025-05-29' },
+  //   { id: 3, customer: 'Ahmed Khan', amount: 7200, status: 'Shipping', date: '2025-05-28' },
+  // ])
 
   return (
     <div className="pb-20 md:pb-0">
@@ -23,19 +41,19 @@ const AdminDashboard = () => {
         <div className="bg-white p-3 md:p-6 rounded-lg shadow-md border-l-4 border-orange-500">
           <div className="text-2xl md:text-4xl mb-2">👥</div>
           <h3 className="text-xs md:text-sm font-semibold text-gray-600">Users</h3>
-          <p className="text-xl md:text-3xl font-bold text-gray-900 mt-1">{stats.totalUsers}</p>
+          <p className="text-xl md:text-3xl font-bold text-gray-900 mt-1">{users.length}</p>
         </div>
 
         <div className="bg-white p-3 md:p-6 rounded-lg shadow-md border-l-4 border-orange-500">
           <div className="text-2xl md:text-4xl mb-2">📦</div>
           <h3 className="text-xs md:text-sm font-semibold text-gray-600">Products</h3>
-          <p className="text-xl md:text-3xl font-bold text-gray-900 mt-1">{stats.totalProducts}</p>
+          <p className="text-xl md:text-3xl font-bold text-gray-900 mt-1">{products.length}</p>
         </div>
 
         <div className="bg-white p-3 md:p-6 rounded-lg shadow-md border-l-4 border-orange-500">
           <div className="text-2xl md:text-4xl mb-2">🛒</div>
           <h3 className="text-xs md:text-sm font-semibold text-gray-600">Orders</h3>
-          <p className="text-xl md:text-3xl font-bold text-gray-900 mt-1">{stats.totalOrders}</p>
+          <p className="text-xl md:text-3xl font-bold text-gray-900 mt-1">{allOrders.length}</p>
         </div>
 
         <div className="bg-white p-3 md:p-6 rounded-lg shadow-md border-l-4 border-orange-500">
@@ -51,7 +69,7 @@ const AdminDashboard = () => {
         
         {/* Mobile Card View */}
         <div className="md:hidden space-y-3">
-          {recentOrders.map((order) => (
+          {allOrders.map((order) => (
             <div key={order.id} className="border border-gray-200 rounded-lg p-3 hover:shadow-md transition">
               <div className="flex justify-between items-start mb-2">
                 <div>
@@ -68,7 +86,7 @@ const AdminDashboard = () => {
               </div>
               <div className="flex justify-between items-center text-sm">
                 <span className="text-gray-600">{order.date}</span>
-                <span className="font-bold text-gray-800">₹{order.amount.toLocaleString()}</span>
+                <span className="font-bold text-gray-800">₹{order.totalAmount?.toLocaleString()}</span>
               </div>
             </div>
           ))}
@@ -87,21 +105,21 @@ const AdminDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {recentOrders.map((order) => (
-                <tr key={order.id} className="border-b hover:bg-gray-50">
-                  <td className="px-4 py-3 text-gray-800">#{order.id}</td>
-                  <td className="px-4 py-3 text-gray-800">{order.customer}</td>
-                  <td className="px-4 py-3 text-gray-800">₹{order.amount.toLocaleString()}</td>
+              {allOrders.map((order) => (
+                <tr key={order._id} className="border-b hover:bg-gray-50">
+                  <td className="px-4 py-3 text-gray-800">#{order._id}</td>
+                  <td className="px-4 py-3 text-gray-800">{order.user.name}</td>
+                  <td className="px-4 py-3 text-gray-800">₹{order.totalAmount?.toLocaleString()}</td>
                   <td className="px-4 py-3">
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                       order.status === 'Completed' ? 'bg-green-100 text-green-800' :
                       order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
                       'bg-blue-100 text-blue-800'
                     }`}>
-                      {order.status}
+                      {order.orderStatus}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-gray-800">{order.date}</td>
+                  <td className="px-4 py-3 text-gray-800">{order.createdAt}</td>
                 </tr>
               ))}
             </tbody>

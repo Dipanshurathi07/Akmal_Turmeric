@@ -1,15 +1,20 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Sparkles } from "lucide-react";
+import { useSelector, useDispatch } from "react-redux";
+import { registerUser } from "../Redux/Slice/AuthSlice";
 
 function Signup() {
+  const { loading, error, message } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const verifiedEmail = location.state?.email || "";
   const [formData, setFormData] = useState({
-    companyName: "",
-    email: "",
+    name: "",
+    email: verifiedEmail,
     password: "",
-    confirmPassword: "",
-    phone: "",
-    country: "",
+    contact: "",
   });
 
   const updateField = (field, value) => {
@@ -21,8 +26,17 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Signup UI only");
+    dispatch(registerUser(formData));
+    if(message && message.toLowerCase().includes("registration successful")) {
+      navigate("/home");
+    }
   };
+
+  useEffect(() => {
+    if (!verifiedEmail) {
+      navigate("/verify-email");
+    }
+  }, [verifiedEmail, navigate]);
 
   return (
     <div className="min-h-[calc(100vh-120px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
@@ -42,13 +56,8 @@ function Signup() {
             </h1>
           </div>
 
-          <h2 className="text-3xl font-bold mb-2">
-            Create Account
-          </h2>
-
-          <p className="text-gray-600">
-            Start ordering premium turmeric wholesale
-          </p>
+          <h2 className="text-3xl font-bold mb-2">Create Account</h2>
+          <p className="text-gray-600">Your email is already verified. Complete the registration form below.</p>
         </div>
 
         {/* Signup Card */}
@@ -67,10 +76,10 @@ function Signup() {
 
               <input
                 type="text"
-                value={formData.companyName}
+                value={formData.name}
                 onChange={(e) =>
                   updateField(
-                    "companyName",
+                    "name",
                     e.target.value
                   )
                 }
@@ -88,18 +97,14 @@ function Signup() {
               <input
                 type="email"
                 value={formData.email}
-                onChange={(e) =>
-                  updateField(
-                    "email",
-                    e.target.value
-                  )
-                }
-                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                onChange={(e) => updateField("email", e.target.value)}
+                readOnly={Boolean(verifiedEmail)}
+                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-gray-50"
                 placeholder="your@company.com"
               />
             </div>
 
-            {/* Phone */}
+            {/* contact */}
             <div>
               <label className="block mb-2 font-medium">
                 Phone Number
@@ -107,35 +112,15 @@ function Signup() {
 
               <input
                 type="tel"
-                value={formData.phone}
+                value={formData.contact}
                 onChange={(e) =>
                   updateField(
-                    "phone",
+                    "contact",
                     e.target.value
                   )
                 }
                 className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 placeholder="+91 9876543210"
-              />
-            </div>
-
-            {/* Country */}
-            <div>
-              <label className="block mb-2 font-medium">
-                Country
-              </label>
-
-              <input
-                type="text"
-                value={formData.country}
-                onChange={(e) =>
-                  updateField(
-                    "country",
-                    e.target.value
-                  )
-                }
-                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                placeholder="India"
               />
             </div>
 
@@ -158,33 +143,15 @@ function Signup() {
                 placeholder="••••••••"
               />
             </div>
-
-            {/* Confirm Password */}
-            <div>
-              <label className="block mb-2 font-medium">
-                Confirm Password *
-              </label>
-
-              <input
-                type="password"
-                value={formData.confirmPassword}
-                onChange={(e) =>
-                  updateField(
-                    "confirmPassword",
-                    e.target.value
-                  )
-                }
-                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                placeholder="••••••••"
-              />
-            </div>
-
+            {error && <p className="text-red-600 text-sm">{error}</p>}
+            {message && <p className="text-green-600 text-sm">{message}</p>}
             {/* Button */}
             <button
               type="submit"
-              className="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-3 rounded-lg transition"
+              disabled={loading}
+              className="w-full bg-yellow-600 hover:bg-yellow-700 disabled:opacity-60 disabled:cursor-not-allowed text-white py-3 rounded-lg transition"
             >
-              Create Account
+              {loading ? "Creating account..." : "Create Account"}
             </button>
 
           </form>

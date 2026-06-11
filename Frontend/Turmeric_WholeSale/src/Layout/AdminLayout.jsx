@@ -15,7 +15,6 @@ const AdminLayout = () => {
     { path: '/admin/products', label: '📦 Products', icon: '📦' },
     { path: '/admin/orders', label: '🛒 Orders', icon: '🛒' },
     { path: '/admin/users', label: '👥 Users', icon: '👥' },
-    { path: '/admin/reports', label: '📈 Reports', icon: '📈' },
   ]
 
   return (
@@ -30,18 +29,24 @@ const AdminLayout = () => {
           <ul className="space-y-2">
             {navItems.map((item) => (
               <li key={item.path}>
-                <a
-                  href={item.path}
-                  className="block px-4 py-3 text-gray-300 hover:bg-orange-500 hover:bg-opacity-20 hover:text-orange-500 rounded transition"
+                <button
+                  onClick={() => navigate(item.path)}
+                  className="w-full text-left px-4 py-3 text-gray-300 hover:bg-orange-500 hover:bg-opacity-20 hover:text-orange-500 rounded transition"
                 >
                   {item.label}
-                </a>
+                </button>
               </li>
             ))}
           </ul>
         </nav>
 
-        <div className="pt-6 border-t border-gray-700">
+        <div className="pt-6 border-t border-gray-700 space-y-2">
+          <button
+            className="w-full py-3 bg-white text-gray-900 rounded font-semibold transition"
+            onClick={() => navigate('/')}
+          >
+            🏠 Return to Home
+          </button>
           <button
             className="w-full py-3 bg-orange-500 hover:bg-orange-600 text-white rounded font-semibold transition"
             onClick={handleLogout}
@@ -55,7 +60,15 @@ const AdminLayout = () => {
       <main className="flex-1 flex flex-col md:w-full">
         {/* Mobile Top Header */}
         <header className="md:hidden bg-gradient-to-r from-gray-900 to-gray-800 text-white p-4 shadow-lg flex justify-between items-center">
-          <h1 className="text-lg font-bold">Admin Panel</h1>
+          <div className="flex items-center gap-3">
+            <h1 className="text-lg font-bold">Admin Panel</h1>
+            <button
+              className="text-sm bg-white bg-opacity-10 px-2 py-1 rounded"
+              onClick={() => navigate('/')}
+            >
+              🏠 Home
+            </button>
+          </div>
           <button
             className="text-2xl"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -73,15 +86,20 @@ const AdminLayout = () => {
         {mobileMenuOpen && (
           <div className="md:hidden bg-gradient-to-b from-gray-900 to-gray-800 text-white p-4 space-y-2 border-b border-gray-700">
             {navItems.map((item) => (
-              <a
+              <button
                 key={item.path}
-                href={item.path}
-                className="block px-4 py-3 text-gray-300 hover:bg-orange-500 hover:bg-opacity-20 hover:text-orange-500 rounded transition"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => { setMobileMenuOpen(false); navigate(item.path); }}
+                className="w-full text-left px-4 py-3 text-gray-300 hover:bg-orange-500 hover:bg-opacity-20 hover:text-orange-500 rounded transition"
               >
                 {item.label}
-              </a>
+              </button>
             ))}
+            <button
+              className="w-full text-left px-4 py-3 text-gray-300 hover:bg-orange-500 hover:bg-opacity-20 hover:text-orange-500 rounded transition"
+              onClick={() => { setMobileMenuOpen(false); navigate('/'); }}
+            >
+              🏠 Return to Home
+            </button>
             <button
               className="w-full mt-4 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded font-semibold transition"
               onClick={handleLogout}
@@ -100,15 +118,19 @@ const AdminLayout = () => {
         <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg">
           <div className="flex justify-around">
             {navItems.map((item) => (
-              <a
+              <button
                 key={item.path}
-                href={item.path}
+                onClick={() => navigate(item.path)}
                 className="flex-1 flex flex-col items-center justify-center py-3 text-gray-600 hover:text-orange-500 hover:bg-orange-50 transition text-sm"
               >
                 <span className="text-xl mb-1">{item.icon}</span>
                 <span className="hidden xs:inline text-xs">{item.icon}</span>
-              </a>
+              </button>
             ))}
+            <button onClick={() => navigate('/')} className="flex-1 flex flex-col items-center justify-center py-3 text-gray-600 hover:text-orange-500 hover:bg-orange-50 transition text-sm">
+              <span className="text-xl mb-1">🏠</span>
+              <span className="hidden xs:inline text-xs">Home</span>
+            </button>
           </div>
         </nav>
       </main>

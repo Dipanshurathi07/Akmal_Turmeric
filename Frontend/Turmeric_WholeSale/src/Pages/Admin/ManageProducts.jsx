@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
-
+import React, { useEffect, useState } from 'react'
+import { fetchAllProducts } from '../../Redux/Slice/ProductSlice';
+import { useDispatch, useSelector } from "react-redux";
 const ManageProducts = () => {
-  const [products, setProducts] = useState([
-    { id: 1, name: 'Turmeric Powder Premium', price: 450, stock: 120, category: 'Spices' },
-    { id: 2, name: 'Organic Turmeric', price: 550, stock: 80, category: 'Organic' },
-    { id: 3, name: 'Turmeric Capsules', price: 350, stock: 200, category: 'Supplements' },
-  ])
-
+  const {products} = useSelector((state)=>state.products)
+  const dispatch = useDispatch();
+  
   const [showForm, setShowForm] = useState(false)
   const [formData, setFormData] = useState({ name: '', price: '', stock: '', category: '' })
 
@@ -27,6 +25,9 @@ const ManageProducts = () => {
   const handleDeleteProduct = (id) => {
     setProducts(products.filter(p => p.id !== id))
   }
+  useEffect(()=>{
+    dispatch(fetchAllProducts());
+  },[dispatch]);
 
   return (
     <div className="pb-20 md:pb-0">

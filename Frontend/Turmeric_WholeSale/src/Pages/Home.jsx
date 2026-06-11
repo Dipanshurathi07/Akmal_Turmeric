@@ -224,7 +224,7 @@ function Home() {
 
           <div className="flex gap-4 justify-center">
             <Link
-              to="/signup"
+              to="/verify-email"
               className="bg-white text-yellow-700 px-8 py-3 rounded-lg hover:bg-yellow-50"
             >
               Create Account

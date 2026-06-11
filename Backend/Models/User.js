@@ -31,6 +31,14 @@ const userSchema = new Schema(
     type: String,
     enum: ["admin", "customer"],
     default: "customer"
+  },
+  verified : {
+    type : Boolean,
+    default : false
+  },
+  Contact : {
+    type : Number,
+    required : true
   }
 },
 {

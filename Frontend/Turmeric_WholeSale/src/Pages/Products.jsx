@@ -1,61 +1,32 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchAllProducts } from '../Redux/Slice/ProductSlice';
+import { addToCart } from '../Redux/Slice/CartSlice';
+import { useNavigate } from "react-router-dom";
 import {
   ShoppingCart,
   Package,
+  UserRoundIcon,
 } from "lucide-react";
-
-const products = [
-  {
-    id: "1",
-    name: "Organic Turmeric Powder - 10kg",
-    description:
-      "Premium grade turmeric powder with 3-5% curcumin content.",
-    price: 85,
-    unit: "per bag",
-    minOrder: 10,
-    image:
-      "https://images.unsplash.com/photo-1615485500834-bc10199bc727",
-    curcuminContent: "3-5%",
-  },
-  {
-    id: "2",
-    name: "Organic Turmeric Powder - 25kg",
-    description:
-      "Bulk packaging with better pricing.",
-    price: 190,
-    unit: "per bag",
-    minOrder: 4,
-    image:
-      "https://images.unsplash.com/photo-1702041295331-840d4d9aa7c9",
-    curcuminContent: "3-5%",
-  },
-  {
-    id: "3",
-    name: "Fresh Turmeric Root - 20kg",
-    description:
-      "Farm-fresh organic turmeric roots.",
-    price: 120,
-    unit: "per box",
-    minOrder: 20,
-    image:
-      "https://images.unsplash.com/photo-1666818398897-381dd5eb9139",
-  },
-];
-
 function Products() {
-  const [quantities, setQuantities] =
-    useState({});
+  const navigate = useNavigate();
+  const [quantities, setQuantities] = useState({});
+  const {products,loading,error} = useSelector((state)=>state.products);
+  const {user} = useSelector((state)=>state.auth);
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(fetchAllProducts());
+  },[dispatch])
 
-  const handleAddToCart = (
-    product
-  ) => {
-    const quantity =
-      quantities[product.id] ||
-      product.minOrder;
 
-    alert(
-      `${quantity} units of ${product.name} added (UI only)`
-    );
+  const handleAddToCart = (product) => {
+    if(!user){
+      navigate("/login");
+      return;
+    }
+    const quantity = quantities[product._id] ?? (product.minOrder ?? 1);
+    dispatch(addToCart({ productId: product._id, quantity }));
   };
 
   const updateQuantity = (
@@ -98,13 +69,13 @@ function Products() {
 
           {products.map((product) => (
             <div
-              key={product.id}
+              key={product._id}
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition"
             >
 
               {/* Image */}
               <img
-                src={product.image}
+                src={product.image?.url || '/placeholder-product.png'}
                 alt={product.name}
                 className="w-full h-64 object-cover"
               />
@@ -134,18 +105,17 @@ function Products() {
                 <div className="flex items-center gap-2 mb-4 text-sm text-gray-500">
                   <Package size={16} />
                   <span>
-                    Min. Order:{" "}
-                    {product.minOrder} units
+                    Min. Order: {product.minOrder ?? 1} {product.unit || 'units'}
                   </span>
                 </div>
 
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-2xl font-semibold text-yellow-700">
-                    ${product.price}
+                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}
                   </span>
 
                   <span className="text-gray-500">
-                    {product.unit}
+                    {product.unit || ''}
                   </span>
                 </div>
 
@@ -158,20 +128,12 @@ function Products() {
                   <input
                     type="number"
                     min={product.minOrder}
-                    value={
-                      quantities[
-                        product.id
-                      ] ||
-                      product.minOrder
-                    }
+                    value={quantities[product._id] ?? (product.minOrder ?? 1)}
                     onChange={(e) =>
                       updateQuantity(
-                        product.id,
-                        parseInt(
-                          e.target.value
-                        ) ||
-                          product.minOrder,
-                        product.minOrder
+                        product._id,
+                        parseInt(e.target.value) || (product.minOrder ?? 1),
+                        product.minOrder ?? 1
                       )
                     }
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
@@ -179,17 +141,23 @@ function Products() {
                 </div>
 
                 {/* Button */}
-                <button
-                  onClick={() =>
-                    handleAddToCart(
-                      product
-                    )
-                  }
-                  className="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-lg transition flex items-center justify-center gap-2"
-                >
-                  <ShoppingCart size={18} />
-                  Add to Cart
-                </button>
+                <div className="grid gap-3">
+                  <Link
+                    to={`/products/${product._id}`}
+                    className="w-full inline-flex items-center justify-center rounded-lg border border-yellow-600 text-yellow-700 py-2 hover:bg-yellow-50 transition"
+                  >
+                    View Details
+                  </Link>
+                  <button
+                    onClick={() =>
+                      handleAddToCart(product)
+                    }
+                    className="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-lg transition flex items-center justify-center gap-2"
+                  >
+                    <ShoppingCart size={18} />
+                    Add to Cart
+                  </button>
+                </div>
 
               </div>
             </div>

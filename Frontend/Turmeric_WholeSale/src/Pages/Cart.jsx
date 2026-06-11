@@ -2,38 +2,34 @@ import {
   Trash2,
   ShoppingCart,
 } from "lucide-react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import {useEffect} from "react";
+import { fetchUserCart } from "../Redux/Slice/CartSlice";
+import { removeFromCart } from "../Redux/Slice/CartSlice";
+
 
 function Cart() {
   const navigate = useNavigate();
+  const { cart, loading, error, message } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const products = cart?.items || [];
+  const totalPrice = cart?.totalPrice || 0;
+  const totalItems = cart?.totalItems || 0;
 
-  // Demo UI Data
-  const items = [
-    {
-      id: 1,
-      name: "Organic Turmeric Powder",
-      unit: "1 Kg Pack",
-      price: 25,
-      quantity: 2,
-      image:
-        "https://images.unsplash.com/photo-1615485290382-441e4d049cb5",
-    },
-  ];
-
-  const totalPrice = items.reduce(
-    (total, item) =>
-      total +
-      item.price * item.quantity,
-    0
-  );
+  useEffect(()=>{
+    dispatch(fetchUserCart());
+  },[dispatch,cart?.items?.length]);
 
   const handleCheckout = () => {
     navigate("/checkout");
   };
-
+  const handleDeleteItem = (productId) => {
+    dispatch(removeFromCart({ productId }));
+  }
   // Empty Cart UI
-  if (items.length === 0) {
+  if (products.length === 0) {
     return (
       <div className="min-h-[600px] flex items-center justify-center px-4">
         <div className="text-center">
@@ -77,17 +73,19 @@ function Cart() {
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
 
-            {items.map((item) => (
+            {products.map((product) => {
+              const productId = product.product?._id || product.product;
+              return (
               <div
-                key={item.id}
+                key={productId}
                 className="bg-white rounded-xl shadow-md p-5"
               >
                 <div className="flex flex-col sm:flex-row gap-5">
 
                   {/* Image */}
                   <img
-                    src={item.image}
-                    alt={item.name}
+                    src={product.image}
+                    alt={product.name}
                     className="w-full sm:w-32 h-32 object-cover rounded-lg"
                   />
 
@@ -95,11 +93,11 @@ function Cart() {
                   <div className="flex-1">
 
                     <h3 className="text-xl font-semibold mb-2">
-                      {item.name}
+                      {product.name}
                     </h3>
 
                     <p className="text-gray-500 mb-4">
-                      {item.unit}
+                      {product.unit}
                     </p>
 
                     <div className="flex flex-wrap items-center gap-4">
@@ -112,7 +110,7 @@ function Cart() {
                         <input
                           type="number"
                           min="1"
-                          value={item.quantity}
+                          value={product.quantity}
                           readOnly
                           className="w-20 px-3 py-1 border rounded-lg bg-gray-100"
                         />
@@ -120,7 +118,8 @@ function Cart() {
 
                       <button
                         className="text-red-600 hover:text-red-700 flex items-center gap-2"
-                      >
+                        onClick={() => handleDeleteItem(productId)}
+                        >
                         <Trash2 size={16} />
                         Remove
                       </button>
@@ -133,20 +132,21 @@ function Cart() {
                     <p className="text-2xl font-semibold text-yellow-700 mb-2">
                       $
                       {(
-                        item.price *
-                        item.quantity
+                        product.price *
+                        product.quantity
                       ).toFixed(2)}
                     </p>
 
                     <p className="text-sm text-gray-500">
-                      ${item.price} ×{" "}
-                      {item.quantity}
+                      ${product.price} ×{" "}
+                      {product.quantity}
                     </p>
                   </div>
 
                 </div>
               </div>
-            ))}
+            );
+            })}
 
           </div>
 
