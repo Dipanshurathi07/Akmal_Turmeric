@@ -9,7 +9,7 @@ const OrderDetails = () => {
   const navigate = useNavigate();
   const { currentOrder, loading, error } = useSelector((state) => state.order);
   const [showTracking, setShowTracking] = useState(false);
-  const supportEmail = 'support@turmeric.com';
+  const supportEmail = 'support@akmalhing.com';
 
   useEffect(() => {
     if (!orderId) return;

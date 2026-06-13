@@ -64,7 +64,7 @@ const customerHtml = (name) => {
     <p>
       Regards,
       <br/>
-      Turmeric Store Team
+      Akmal Hing Trading Team
     </p>
 
   </div>

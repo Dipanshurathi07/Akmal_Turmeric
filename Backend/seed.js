@@ -20,7 +20,8 @@ const seedUsers = async () => {
       name : "Akmal",
       email : "akmal@example.com",
       role : "admin",
-      password : "123456789"
+      password : "123456789",
+      Contact : 9876543210
     })
     await users.save();
     console.log('Users seeded successfully!');

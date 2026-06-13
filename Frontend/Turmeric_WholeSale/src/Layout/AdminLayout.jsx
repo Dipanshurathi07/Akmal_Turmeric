@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const AdminLayout = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const {user} = useSelector((state) => state.auth);
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -79,7 +81,7 @@ const AdminLayout = () => {
 
         {/* Desktop Top Header */}
         <header className="hidden md:flex bg-white px-6 py-4 shadow-sm justify-between items-center">
-          <h1 className="text-2xl text-gray-900 font-semibold">Welcome, Akaml</h1>
+          <h1 className="text-2xl text-gray-900 font-semibold">Welcome, {user?.name || 'Admin'}</h1>
         </header>
 
         {/* Mobile Navigation Menu */}

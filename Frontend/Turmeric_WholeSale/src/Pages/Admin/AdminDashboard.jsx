@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react"
 import { fetchAllUsers } from '../../Redux/Slice/AdminSlice';
 import { fetchAllProducts } from '../../Redux/Slice/ProductSlice';
 import Products from '../Products';
@@ -11,20 +10,22 @@ const AdminDashboard = () => {
   const { users }  = useSelector((state)=>state.admin);
   const { products } = useSelector((state)=>state.products);
   const { allOrders, loading, error } = useSelector((state) => state.order);
-  
+
   const dispatch = useDispatch();
-  const [stats, setStats] = useState({
-    totalUsers: 1250,
-    totalProducts: 345,
-    totalOrders: 892,
-    totalRevenue: 45000,
-  })
-  useEffect(()=>{
+
+  // Derived dashboard stats computed from store data
+  const totalUsers = users?.length || 0;
+  const totalProducts = products?.length || 0;
+  const totalOrdersCount = Array.isArray(allOrders) ? allOrders.length : 0;
+  const totalRevenue = Array.isArray(allOrders)
+    ? allOrders.reduce((sum, o) => sum + (Number(o.totalAmount) || 0), 0)
+    : 0;
+
+  useEffect(() => {
     dispatch(fetchAllUsers());
     dispatch(fetchAllProducts());
     dispatch(getAllOrders());
-    console.log(allOrders,"all orders")
-  },[dispatch]);
+  }, [dispatch]);
 
   // const [recentOrders, setRecentOrders] = useState([
   //   { id: 1, customer: 'John Doe', amount: 5000, status: 'Completed', date: '2025-05-30' },
@@ -56,11 +57,11 @@ const AdminDashboard = () => {
           <p className="text-xl md:text-3xl font-bold text-gray-900 mt-1">{allOrders.length}</p>
         </div>
 
-        <div className="bg-white p-3 md:p-6 rounded-lg shadow-md border-l-4 border-orange-500">
-          <div className="text-2xl md:text-4xl mb-2">💰</div>
-          <h3 className="text-xs md:text-sm font-semibold text-gray-600">Revenue</h3>
-          <p className="text-lg md:text-3xl font-bold text-gray-900 mt-1">₹{(stats.totalRevenue / 1000).toFixed(0)}K</p>
-        </div>
+          <div className="bg-white p-3 md:p-6 rounded-lg shadow-md border-l-4 border-orange-500">
+            <div className="text-2xl md:text-4xl mb-2">💰</div>
+            <h3 className="text-xs md:text-sm font-semibold text-gray-600">Revenue</h3>
+            <p className="text-lg md:text-3xl font-bold text-gray-900 mt-1">₹{totalRevenue.toLocaleString()}</p>
+          </div>
       </div>
 
       {/* Recent Orders - Mobile Card View */}
@@ -108,7 +109,7 @@ const AdminDashboard = () => {
               {allOrders.map((order) => (
                 <tr key={order._id} className="border-b hover:bg-gray-50">
                   <td className="px-4 py-3 text-gray-800">#{order._id}</td>
-                  <td className="px-4 py-3 text-gray-800">{order.user.name}</td>
+                  <td className="px-4 py-3 text-gray-800">{order.user?.name || 'N/A'}</td>
                   <td className="px-4 py-3 text-gray-800">₹{order.totalAmount?.toLocaleString()}</td>
                   <td className="px-4 py-3">
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${

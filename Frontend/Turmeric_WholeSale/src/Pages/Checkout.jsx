@@ -33,7 +33,7 @@ const Checkout = () => {
 
   useEffect(() => {
     if (cart && cart.items && cart.items.length === 0) {
-      navigate('/cart');
+      navigate('/order-confirmation');
     }
   }, [cart, navigate]);
 

@@ -17,10 +17,10 @@ const Reports = () => {
     inventory: {
       title: 'Inventory Report',
       data: [
-        { product: 'Turmeric Powder', quantity: 120, value: 54000 },
-        { product: 'Organic Turmeric', quantity: 80, value: 44000 },
-        { product: 'Turmeric Capsules', quantity: 200, value: 70000 },
-        { product: 'Turmeric Tablets', quantity: 150, value: 45000 },
+        { product: 'Hing Powder', quantity: 120, value: 54000 },
+        { product: 'Hing Resin', quantity: 80, value: 44000 },
+        { product: 'Bulk Hing Paste', quantity: 200, value: 70000 },
+        { product: 'Hing Compound Blend', quantity: 150, value: 45000 },
       ],
     },
     customers: {

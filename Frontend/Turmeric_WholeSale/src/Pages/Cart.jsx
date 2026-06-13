@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import {useEffect} from "react";
 import { fetchUserCart } from "../Redux/Slice/CartSlice";
 import { removeFromCart } from "../Redux/Slice/CartSlice";
+import { getImageUrl } from '../Utils/getImageUrl';
 
 
 function Cart() {
@@ -75,6 +76,11 @@ function Cart() {
 
             {products.map((product) => {
               const productId = product.product?._id || product.product;
+              const itemProduct = product.product || product;
+              const unitPrice = product.price ?? itemProduct.price ?? 0;
+              const displayName = itemProduct.name || product.name || 'Product';
+              const displayUnit = itemProduct.unit || product.unit || '';
+
               return (
               <div
                 key={productId}
@@ -84,20 +90,24 @@ function Cart() {
 
                   {/* Image */}
                   <img
-                    src={product.image}
-                    alt={product.name}
+                    src={getImageUrl(itemProduct.image) || '/placeholder-product.png'}
+                    alt={displayName}
                     className="w-full sm:w-32 h-32 object-cover rounded-lg"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = '/placeholder-product.png';
+                    }}
                   />
 
                   {/* Details */}
                   <div className="flex-1">
 
                     <h3 className="text-xl font-semibold mb-2">
-                      {product.name}
+                      {displayName}
                     </h3>
 
                     <p className="text-gray-500 mb-4">
-                      {product.unit}
+                      {displayUnit}
                     </p>
 
                     <div className="flex flex-wrap items-center gap-4">
@@ -131,14 +141,11 @@ function Cart() {
                   <div className="text-left sm:text-right">
                     <p className="text-2xl font-semibold text-yellow-700 mb-2">
                       $
-                      {(
-                        product.price *
-                        product.quantity
-                      ).toFixed(2)}
+                      {(unitPrice * product.quantity).toFixed(2)}
                     </p>
 
                     <p className="text-sm text-gray-500">
-                      ${product.price} ×{" "}
+                      ${unitPrice} ×{" "}
                       {product.quantity}
                     </p>
                   </div>

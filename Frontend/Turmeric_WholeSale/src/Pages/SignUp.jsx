@@ -4,7 +4,7 @@ import { Sparkles } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { registerUser } from "../Redux/Slice/AuthSlice";
 
-function Signup() {
+function SignUp() {
   const { loading, error, message } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ function Signup() {
     e.preventDefault();
     dispatch(registerUser(formData));
     if(message && message.toLowerCase().includes("registration successful")) {
-      navigate("/home");
+      navigate("/");
     }
   };
 
@@ -147,6 +147,7 @@ function Signup() {
             {message && <p className="text-green-600 text-sm">{message}</p>}
             {/* Button */}
             <button
+              onClick={handleSubmit}
               type="submit"
               disabled={loading}
               className="w-full bg-yellow-600 hover:bg-yellow-700 disabled:opacity-60 disabled:cursor-not-allowed text-white py-3 rounded-lg transition"
@@ -176,4 +177,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default SignUp;

@@ -9,6 +9,7 @@ import {
   Package,
   UserRoundIcon,
 } from "lucide-react";
+import { getImageUrl } from '../Utils/getImageUrl';
 function Products() {
   const navigate = useNavigate();
   const [quantities, setQuantities] = useState({});
@@ -17,6 +18,7 @@ function Products() {
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(fetchAllProducts());
+    console.log("Products loaded:", products);
   },[dispatch])
 
 
@@ -58,8 +60,8 @@ function Products() {
           </h1>
 
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Browse our premium organic
-            turmeric products.
+            Browse our premium B2B hing products for retailers, distributors
+            and spice traders.
           </p>
 
         </div>
@@ -75,9 +77,13 @@ function Products() {
 
               {/* Image */}
               <img
-                src={product.image?.url || '/placeholder-product.png'}
+                src={getImageUrl(product.image) || '/placeholder-product.png'}
                 alt={product.name}
                 className="w-full h-64 object-cover"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = '/placeholder-product.png';
+                }}
               />
 
               <div className="p-6">
@@ -88,12 +94,9 @@ function Products() {
                     {product.name}
                   </h3>
 
-                  {product.curcuminContent && (
+                  {product.quality && (
                     <span className="bg-yellow-100 text-yellow-800 text-sm px-2 py-1 rounded">
-                      {
-                        product.curcuminContent
-                      }{" "}
-                      curcumin
+                      {product.quality}
                     </span>
                   )}
                 </div>
@@ -105,14 +108,25 @@ function Products() {
                 <div className="flex items-center gap-2 mb-4 text-sm text-gray-500">
                   <Package size={16} />
                   <span>
-                    Min. Order: {product.minOrder ?? 1} {product.unit || 'units'}
+                    Min. Order: {product.moq || product.minOrder || 1} {product.unit || 'units'}
                   </span>
                 </div>
 
+                <div className="flex flex-wrap gap-2 items-center mb-4 text-sm text-gray-500">
+                  {product.productType && <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-1">{product.productType}</span>}
+                  {product.packagingSize && <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-1">Pack: {product.packagingSize}</span>}
+                  {product.availability && <span className="inline-flex items-center rounded-full bg-green-100 text-green-800 px-2 py-1">{product.availability}</span>}
+                </div>
+
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-2xl font-semibold text-yellow-700">
-                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}
-                  </span>
+                  <div>
+                    <span className="text-2xl font-semibold text-yellow-700">
+                      {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(product.price)}
+                    </span>
+                    {product.bulkPrice ? (
+                      <p className="text-xs text-gray-500">Bulk: ₹{product.bulkPrice}</p>
+                    ) : null}
+                  </div>
 
                   <span className="text-gray-500">
                     {product.unit || ''}
@@ -127,13 +141,13 @@ function Products() {
 
                   <input
                     type="number"
-                    min={product.minOrder}
-                    value={quantities[product._id] ?? (product.minOrder ?? 1)}
+                    min={product.moq || product.minOrder || 1}
+                    value={quantities[product._id] ?? (product.moq || product.minOrder || 1)}
                     onChange={(e) =>
                       updateQuantity(
                         product._id,
-                        parseInt(e.target.value) || (product.minOrder ?? 1),
-                        product.minOrder ?? 1
+                        parseInt(e.target.value) || (product.moq || product.minOrder || 1),
+                        product.moq || product.minOrder || 1
                       )
                     }
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"

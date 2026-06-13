@@ -20,12 +20,12 @@ export const fetchAllProducts = createAsyncThunk(
 export const fetchProductById = createAsyncThunk(
   "products/fetchProductById",
   async (id, { rejectWithValue }) => {
+    console.log("Function called with ID:", id);
     try {
       const response = await axiosInstance.get(`/products/${id}`);
-      console.log("Done");
-      console.log(response.data);
       return response.data;
     } catch (error) {
+      console.error("Error fetching product:", error);
       return rejectWithValue(
         error.response?.data || {
           Message: "Product not found",
@@ -38,9 +38,9 @@ export const fetchProductById = createAsyncThunk(
 
 export const addProduct = createAsyncThunk(
   "products/addProduct",
-  async (productData, { rejectWithValue }) => {
+  async (formData, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post('/products', productData);
+      const response = await axiosInstance.post('/products', formData);
 
       return response.data;
     } catch (error) {
@@ -58,7 +58,7 @@ export const updateProduct = createAsyncThunk(
   async ({ id, productData }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(`/products/${id}`, productData);
-
+      console.log("Updated product:", response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -108,7 +108,7 @@ const productSlice = createSlice({
 
       .addCase(fetchAllProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload;
+        state.products = Array.isArray(action.payload) ? action.payload : [];
       })
 
       .addCase(fetchAllProducts.rejected, (state, action) => {
@@ -175,10 +175,8 @@ const productSlice = createSlice({
 
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.loading = false;
-
         state.products = state.products.filter(
-          (product) =>
-            product._id !== action.payload._id
+          product => product._id !== action.payload._id
         );
       })
 

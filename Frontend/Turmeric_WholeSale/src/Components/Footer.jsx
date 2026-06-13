@@ -18,7 +18,7 @@ export default function Footer() {
             </div>
 
             <p className="text-gray-400 leading-8 text-[17px]">
-              Premium organic turmeric wholesale supplier. Quality you can
+              Leading hing wholesale supplier and exporter. Quality you can
               trust, service you can rely on.
             </p>
           </div>

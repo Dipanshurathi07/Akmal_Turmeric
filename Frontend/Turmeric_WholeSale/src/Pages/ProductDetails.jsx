@@ -3,9 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ShoppingCart, ArrowLeft } from 'lucide-react';
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchProductById } from "../Redux/Slice/ProductSlice"
+import { getImageUrl } from '../Utils/getImageUrl';
+import { addToCart } from '../Redux/Slice/CartSlice';
 
 function ProductDetails() {
   const {product,loading,error}=useSelector((state)=>state.products);
+  const {user} = useSelector((state)=>state.auth);
   const dispatch = useDispatch();
   const { productId } = useParams();
   const navigate = useNavigate();
@@ -31,8 +34,19 @@ function ProductDetails() {
     );
   }
 
-  const handleAddToCart = () => {
-    alert(`${quantity} units of ${product.name} added to cart (UI only)`);
+  const handleAddToCart = async () => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
+    const qty = Math.max(product.minOrder ?? 1, Number(quantity) || 1);
+
+    try {
+      await dispatch(addToCart({ productId: product._id, quantity: qty })).unwrap();
+    } catch (err) {
+      console.error('Add to cart failed', err);
+    }
   };
 
   return (
@@ -41,9 +55,13 @@ function ProductDetails() {
         <div className="grid grid-cols-1 lg:grid-cols-2">
           <div className="relative h-96 lg:h-full">
             <img
-              src={product.image?.url || '/placeholder-product.png'}
+              src={getImageUrl(product.image) || '/placeholder-product.png'}
               alt={product.name}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = '/placeholder-product.png';
+              }}
             />
           </div>
 
@@ -62,14 +80,43 @@ function ProductDetails() {
             <div className="grid gap-4 sm:grid-cols-2 mb-8">
               <div className="rounded-2xl bg-yellow-50 p-4">
                 <p className="text-sm uppercase tracking-wide text-gray-500">Price</p>
-                <p className="text-3xl font-semibold text-yellow-700">${product.price}</p>
+                <p className="text-3xl font-semibold text-yellow-700">₹{product.price}</p>
                 <p className="text-sm text-gray-500">{product.unit}</p>
+                {product.bulkPrice ? <p className="text-xs text-gray-500">Bulk Price: ₹{product.bulkPrice}</p> : null}
+                {product.wholesaleDiscount ? <p className="text-xs text-gray-500">Wholesale discount: {product.wholesaleDiscount}%</p> : null}
               </div>
               <div className="rounded-2xl bg-gray-50 p-4">
                 <p className="text-sm uppercase tracking-wide text-gray-500">Minimum order</p>
-                <p className="text-2xl font-semibold">{product.minOrder} units</p>
-                <p className="text-sm text-gray-500">Curcumin: {product.curcuminContent}</p>
+                <p className="text-2xl font-semibold">{product.moq || product.minOrder} units</p>
+                <p className="text-sm text-gray-500">Grade: {product.productGrade || product.quality || 'Commercial Grade'}</p>
               </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 mb-8">
+              {product.productType && (
+                <div className="rounded-2xl bg-gray-50 p-4">
+                  <p className="text-sm uppercase tracking-wide text-gray-500">Product type</p>
+                  <p className="text-lg font-semibold text-gray-800">{product.productType}</p>
+                </div>
+              )}
+              {product.packagingSize && (
+                <div className="rounded-2xl bg-gray-50 p-4">
+                  <p className="text-sm uppercase tracking-wide text-gray-500">Packaging</p>
+                  <p className="text-lg font-semibold text-gray-800">{product.packagingSize}</p>
+                </div>
+              )}
+              {product.leadTime && (
+                <div className="rounded-2xl bg-gray-50 p-4">
+                  <p className="text-sm uppercase tracking-wide text-gray-500">Lead Time</p>
+                  <p className="text-lg font-semibold text-gray-800">{product.leadTime}</p>
+                </div>
+              )}
+              {product.exportQuality && (
+                <div className="rounded-2xl bg-gray-50 p-4">
+                  <p className="text-sm uppercase tracking-wide text-gray-500">Export Quality</p>
+                  <p className="text-lg font-semibold text-gray-800">{product.exportQuality}</p>
+                </div>
+              )}
             </div>
 
             <div className="space-y-6">
@@ -93,10 +140,10 @@ function ProductDetails() {
                   Add to Cart
                 </button>
                 <button
-                  onClick={() => navigate('/checkout')}
+                  onClick={() => navigate('/cart')}
                   className="inline-flex items-center justify-center gap-2 rounded-2xl border border-yellow-600 px-6 py-3 text-yellow-700 font-semibold hover:bg-yellow-50 transition"
                 >
-                  Go to Checkout
+                  Go to Cart
                 </button>
               </div>
             </div>

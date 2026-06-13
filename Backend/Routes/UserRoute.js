@@ -8,6 +8,8 @@ const { otpGenerator, htmlTemplate } = require("../Utils/otpandHtml");
 const { sendEmail } = require("../Services/email");
 const Otp = require("../Models/Otp");
 const { protect } = require('../Middleware/Auth');
+const {admin} = require("../MiddleWare/Auth");
+
 
 dotenv.config();
 
@@ -365,6 +367,20 @@ router.post("/logout", async (req, res) => {
 router.get("/me",protect, async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select("-password");
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({
+      "Server Error": error.message
+    });
+  }
+});
+router.get("/:id",protect,admin,async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id).select("-password");
+    if (!user) {
+      return res.status(404).json({ Message: "User not found" });
+    }
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({

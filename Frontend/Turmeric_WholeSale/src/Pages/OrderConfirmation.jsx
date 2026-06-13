@@ -232,7 +232,7 @@ const OrderConfirmation = () => {
               </p>
               <div className="space-y-2 text-sm">
                 <p className="text-gray-700">
-                  📧 <a href="mailto:support@turmeric.com" className="text-orange-500 hover:underline">support@turmeric.com</a>
+                  📧 <a href="mailto:support@akmalhing.com" className="text-orange-500 hover:underline">support@akmalhing.com</a>
                 </p>
                 <p className="text-gray-700">
                   📞 <a href="tel:+919876543210" className="text-orange-500 hover:underline">+91 98765 43210</a>

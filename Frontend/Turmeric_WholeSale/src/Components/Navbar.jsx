@@ -5,15 +5,19 @@ import {
   X,
   ShoppingCart,
   Package,
+  User,
+  ChevronDown,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserOrders } from "../Redux/Slice/OrderSlice";
 import { logoutUser } from "../Redux/Slice/AuthSlice";
 import { clearCart } from "../Redux/Slice/CartSlice";
+import ThemeToggle from "./ThemeToggle";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
@@ -39,6 +43,7 @@ function Navbar() {
     await dispatch(logoutUser());
     dispatch(clearCart());
     setMenuOpen(false);
+    setProfileOpen(false);
     navigate("/login");
   };
 
@@ -122,26 +127,59 @@ function Navbar() {
               )}
             </Link>
 
+            <ThemeToggle />
+
             {!isAuthenticated ? (
               <Link
-                to="/signup"
+                to="/verify-email"
                 className="bg-yellow-600 hover:bg-yellow-700 text-white px-5 py-2.5 rounded-xl transition"
               >
                 Sign Up
               </Link>
             ) : (
-              <button
-                onClick={handleLogout}
-                className="bg-yellow-600 hover:bg-yellow-700 text-white px-5 py-2.5 rounded-xl transition"
-              >
-                Logout
-              </button>
+              <div className="relative">
+                <button
+                  onClick={() => setProfileOpen((prev) => !prev)}
+                  className="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full transition"
+                >
+                  <User size={18} />
+                  <span className="hidden sm:inline">{user?.name ? user.name.split(' ')[0] : 'Profile'}</span>
+                  <ChevronDown size={16} />
+                </button>
+
+                {profileOpen && (
+                  <div className="absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden z-50">
+                    <div className="px-5 py-4 border-b border-gray-100">
+                      <p className="text-sm text-gray-500">Logged in as</p>
+                      <p className="font-semibold text-gray-900 truncate">{user?.name || 'N/A'}</p>
+                      <p className="text-sm text-gray-500 truncate">{user?.email || 'N/A'}</p>
+                    </div>
+                    <div className="px-5 py-4 space-y-3">
+                      <Link
+                        to="/profile"
+                        onClick={() => setProfileOpen(false)}
+                        className="block text-gray-700 hover:text-yellow-600 transition"
+                      >
+                        View Profile
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left text-red-600 hover:text-red-800 transition"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
 
           </div>
 
           {/* Mobile Right Side */}
           <div className="flex items-center gap-4 md:hidden">
+
+            <ThemeToggle />
 
             {/* Cart Icon Mobile */}
             <Link
@@ -249,6 +287,18 @@ function Navbar() {
               >
                 Cart
               </Link>
+
+              {isAuthenticated && (
+                <Link
+                  to="/profile"
+                  onClick={() =>
+                    setMenuOpen(false)
+                  }
+                  className="text-gray-700 hover:text-yellow-600 transition"
+                >
+                  Profile
+                </Link>
+              )}
 
               {!isAuthenticated ? (
                 <Link

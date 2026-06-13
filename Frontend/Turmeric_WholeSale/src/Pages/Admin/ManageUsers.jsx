@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllUsers, deleteUser, updateUser } from '../../Redux/Slice/AdminSlice'
+import { useNavigate } from 'react-router-dom'
+import {fetchUserById} from '../../Redux/Slice/AuthSlice'
 
 const ManageUsers = () => {
   const dispatch = useDispatch()
   const { users = [], loading, error } = useSelector((state) => state.admin ?? {})
+  const navigate = useNavigate()
+  const { user } = useSelector((state) => state.auth ?? {})
 
   useEffect(() => {
     dispatch(fetchAllUsers())
@@ -38,6 +42,9 @@ const ManageUsers = () => {
     } finally {
       setPending((p) => ({ ...p, [userId]: false }));
     }
+  }
+  const handleViewUser = (userId) => {
+    navigate(`/admin/users/${userId}`);
   }
 
   return (
@@ -147,7 +154,7 @@ const ManageUsers = () => {
                     </select>
                   </td>
                   <td className="px-4 py-3 flex gap-2">
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs font-semibold transition">View</button>
+                    <button onClick={() => handleViewUser(user._id || user.id)} className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs font-semibold transition">View</button>
                     <button
                       className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs font-semibold transition"
                       onClick={() => handleDeleteUser(user._id || user.id)}

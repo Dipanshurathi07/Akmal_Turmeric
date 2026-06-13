@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import './App.css'
 import Home from './Pages/Home'
 import Login from './Pages/Login'
-import Signup from './Pages/Signup'
+import SignUp from './Pages/Signup'
 import Cart from './Pages/Cart'
 import Checkout from './Pages/Checkout'
 import OrderConfirmation from './Pages/OrderConfirmation'
@@ -15,6 +15,7 @@ import VerifyEmail from './Pages/VerifyEmail'
 import UserLayout from './Layout/UserLayout'
 import Products from './Pages/Products'
 import ProductDetails from './Pages/ProductDetails'
+import Profile from './Pages/Profile'
 import ResetPassword from './Pages/ResetPassword'
 import AdminLayout from './Layout/AdminLayout'
 import AdminDashboard from './Pages/Admin/AdminDashboard'
@@ -26,6 +27,10 @@ import OrderDetails from './Pages/OrderDetails'
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./Redux/Slice/AuthSlice";
+import EditProduct from './Pages/Admin/EditProduct'
+import NewProduct from './Pages/Admin/NewProduct'
+import AdminUserProfile from './Pages/Admin/AdminUserProfile'
+import NotFound from './Pages/NotFound'
 
 function App() {
   const dispatch = useDispatch();
@@ -40,8 +45,8 @@ function App() {
       <Route path="/" element={<UserLayout />}> 
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="register" element={<Signup />} />
+        <Route path="signup" element={<SignUp />} />
+        <Route path="register" element={<SignUp />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="verify-email" element={<VerifyEmail />} />
         <Route path="verify-otp" element={<OtpVerification />} />
@@ -55,6 +60,7 @@ function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="products" element={<Products />} />
         <Route path="products/:productId" element={<ProductDetails />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
 
       {/* Admin Routes */}
@@ -64,8 +70,13 @@ function App() {
         <Route path="products" element={<ManageProducts />} />
         <Route path="orders" element={<ManageOrders />} />
         <Route path="users" element={<ManageUsers />} />
+        <Route path="edit/:productId" element={<EditProduct></EditProduct>} />
+        <Route path ="add-product" element={<NewProduct></NewProduct>}></Route>
+        <Route path="users/:userId" element={<AdminUserProfile />} />
+
         {/* <Route path="reports" element={<Reports />} /> */}
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }

@@ -121,6 +121,17 @@ export const logoutUser = createAsyncThunk(
     }
   }
 );
+export const fetchUserById = createAsyncThunk(
+  'auth/fetchUserById',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/users/${id}`, { withCredentials: true });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { Message: 'An error occurred while fetching user data' });
+    }
+  }
+);
 
 const initialState = {
   user: null,
@@ -185,6 +196,19 @@ const authSlice = createSlice({
         state.message = action.payload?.Message || 'Registration successful';
       })
       .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.Message || action.payload || action.error?.message;
+      })
+      .addCase(fetchUserById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(fetchUserById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload || null;
+      })
+      .addCase(fetchUserById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.Message || action.payload || action.error?.message;
       })

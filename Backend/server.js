@@ -17,8 +17,15 @@ connectDB();
 const app = express();
 dotenv.config();
 
+const path = require('path');
+
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(
+  "/Assests",
+  express.static(path.join(__dirname, "Assests"))
+);
 
 // Allow CORS for local dev servers (echo request origin)
 app.use(

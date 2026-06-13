@@ -20,9 +20,10 @@ router.get('/:productId', async (req, res) => {
     if (!product) {
       return res.status(404).json({ Message: 'Product not found' });
     }
-
+    console.log("Product found:", product);
     return res.status(200).json(product);
   } catch (error) {
+    console.error("Error fetching product:", error);
     return res.status(500).json({ Message: error.message });
   }
 });
@@ -30,7 +31,27 @@ router.get('/:productId', async (req, res) => {
 // Create a new product
 router.post('/', async (req, res) => {
   try {
-    const { name, image, price, description, category, stock } = req.body;
+    const {
+      name,
+      image,
+      price,
+      description,
+      category,
+      stock,
+      minOrder,
+      moq,
+      unit,
+      productType,
+      quality,
+      productGrade,
+      packaging,
+      packagingSize,
+      bulkPrice,
+      wholesaleDiscount,
+      leadTime,
+      exportQuality,
+      availability
+    } = req.body;
 
     if (!name || !price || !description || !category) {
       return res.status(400).json({ Message: 'name, price, description, and category are required' });
@@ -42,7 +63,20 @@ router.post('/', async (req, res) => {
       price,
       description,
       category,
-      stock: stock || 0
+      stock: stock || 0,
+      minOrder: minOrder || moq || 1,
+      moq: moq || minOrder || 1,
+      unit: unit || 'kg',
+      productType,
+      quality,
+      productGrade: productGrade || quality,
+      packaging,
+      packagingSize: packagingSize || packaging,
+      bulkPrice: bulkPrice || price,
+      wholesaleDiscount: wholesaleDiscount || 0,
+      leadTime,
+      exportQuality,
+      availability: availability || 'In stock'
     });
 
     return res.status(201).json({ Message: 'Product created successfully', product: newProduct });

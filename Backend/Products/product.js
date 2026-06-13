@@ -1,169 +1,235 @@
+const photo1 = "../Assests/WhatsApp Image 2026-06-08 at 3.40.48 PM.jpeg";
+const photo2 = "../Assests/WhatsApp Image 2026-06-08 at 3.40.54 PM.jpeg";
+const photo3 = "../Assests/WhatsApp Image 2026-06-08 at 3.41.00 PM.jpeg";
+const photo4 = "../Assests/WhatsApp Image 2026-06-08 at 3.41.04 PM.jpeg";
+const photo5 = "../Assests/WhatsApp Image 2026-06-08 at 3.41.37 PM.jpeg";
+const photo6 = "../Assests/WhatsApp Image 2026-06-08 at 3.41.38 PM.jpeg";
+
 const products = [
   {
-    name: "Turmeric Powder",
+    name: "Uzbeki Dana Hing",
     image: {
-      url: "https://example.com/images/turmeric-powder.jpg",
-      filename: "turmeric-powder.jpg"
+      url: photo1,
+      filename: "uzbeki-dana.jpg",
     },
-    price: 250,
-    description: "Fresh, high-quality turmeric powder for cooking and natural wellness.",
-    category: "Powder",
-    stock: 120
+    price: 850,
+    bulkPrice: 800,
+    wholesaleDiscount: 5,
+    description: "Premium quality Uzbeki Dana Hing used in spice processing and food manufacturing.",
+    category: "Raw Hing",
+    productType: "Dana",
+    stock: 100,
+    minOrder: 5,
+    moq: 5,
+    unit: "kg",
+    quality: "Premium",
+    productGrade: "Export Grade",
+    packaging: "25kg Bags",
+    packagingSize: "25kg",
+    leadTime: "5-7 Days",
+    exportQuality: "Yes",
+    availability: "In stock"
   },
+
   {
-    name: "Organic Turmeric Root",
+    name: "Uzbeki Sarkash Hing",
     image: {
-      url: "https://example.com/images/turmeric-root.jpg",
-      filename: "turmeric-root.jpg"
+      url: photo2,
+      filename: "uzbeki-sarkash.jpg",
     },
-    price: 180,
-    description: "Whole organic turmeric roots ready for grinding or brewing.",
-    category: "Root",
-    stock: 80
+    price: 950,
+    bulkPrice: 900,
+    wholesaleDiscount: 6,
+    description: "Strong aroma Uzbeki Sarkash Hing suitable for premium spice blends.",
+    category: "Raw Hing",
+    productType: "Sarkash",
+    stock: 80,
+    minOrder: 5,
+    moq: 5,
+    unit: "kg",
+    quality: "Premium",
+    productGrade: "Export Grade",
+    packaging: "25kg Bags",
+    packagingSize: "25kg",
+    leadTime: "5-7 Days",
+    exportQuality: "Yes",
+    availability: "In stock"
   },
+
   {
-    name: "Turmeric Capsules",
+    name: "Afghani Dana Hing",
     image: {
-      url: "https://example.com/images/turmeric-capsules.jpg",
-      filename: "turmeric-capsules.jpg"
+      url: photo3,
+      filename: "afghani-dana.jpg",
     },
-    price: 450,
-    description: "Natural turmeric supplement capsules to support daily wellness.",
-    category: "Supplements",
-    stock: 60
+    price: 1200,
+    bulkPrice: 1150,
+    wholesaleDiscount: 5,
+    description: "Authentic Afghani Dana Hing with rich flavour and strong aroma.",
+    category: "Raw Hing",
+    productType: "Dana",
+    stock: 60,
+    minOrder: 5,
+    moq: 5,
+    unit: "kg",
+    quality: "A Grade",
+    productGrade: "Premium",
+    packaging: "25kg Bags",
+    packagingSize: "25kg",
+    leadTime: "7 Days",
+    exportQuality: "Yes",
+    availability: "In stock"
   },
+
   {
-    name: "Turmeric Tea Blend",
+    name: "Afghani Sarkash Hing",
     image: {
-      url: "https://example.com/images/turmeric-tea.jpg",
-      filename: "turmeric-tea.jpg"
+      url: photo1,
+      filename: "afghani-sarkash.jpg",
     },
-    price: 220,
-    description: "A soothing turmeric tea blend with ginger and black pepper.",
-    category: "Tea",
-    stock: 100
+    price: 1400,
+    bulkPrice: 1325,
+    wholesaleDiscount: 6,
+    description: "Premium Afghani Sarkash Hing for exporters and spice manufacturers.",
+    category: "Raw Hing",
+    productType: "Sarkash",
+    stock: 50,
+    minOrder: 5,
+    moq: 5,
+    unit: "kg",
+    quality: "Export Quality",
+    productGrade: "A+",
+    packaging: "25kg Bags",
+    packagingSize: "25kg",
+    leadTime: "7-10 Days",
+    exportQuality: "Yes",
+    availability: "In stock"
   },
+
   {
-    name: "Golden Turmeric Paste",
+    name: "Kabuli Dana Hing",
     image: {
-      url: "https://example.com/images/turmeric-paste.jpg",
-      filename: "turmeric-paste.jpg"
+      url: photo2,
+      filename: "kabuli-dana.jpg",
     },
-    price: 320,
-    description: "Ready-to-use turmeric paste for smoothies, cooking, and wellness.",
+    price: 1000,
+    bulkPrice: 950,
+    wholesaleDiscount: 5,
+    description: "Kabuli Dana Hing with balanced aroma and excellent purity.",
+    category: "Raw Hing",
+    productType: "Dana",
+    stock: 90,
+    minOrder: 5,
+    moq: 5,
+    unit: "kg",
+    quality: "Premium",
+    productGrade: "A Grade",
+    packaging: "25kg Bags",
+    packagingSize: "25kg",
+    leadTime: "5-7 Days",
+    exportQuality: "Yes",
+    availability: "In stock"
+  },
+
+  {
+    name: "Kabuli Sarkash Hing",
+    image: {
+      url: photo3,
+      filename: "kabuli-sarkash.jpg",
+    },
+    price: 1150,
+    bulkPrice: 1100,
+    wholesaleDiscount: 5,
+    description: "Natural Kabuli Sarkash Hing for wholesalers and exporters.",
+    category: "Raw Hing",
+    productType: "Sarkash",
+    stock: 70,
+    minOrder: 5,
+    moq: 5,
+    unit: "kg",
+    quality: "Premium",
+    productGrade: "Export Grade",
+    packaging: "25kg Bags",
+    packagingSize: "25kg",
+    leadTime: "5-7 Days",
+    exportQuality: "Yes",
+    availability: "In stock"
+  },
+
+  {
+    name: "Hing Paste",
+    image: {
+      url: photo4,
+      filename: "hing-paste.jpg",
+    },
+    price: 650,
+    bulkPrice: 620,
+    wholesaleDiscount: 4,
+    description: "Ready-to-use Hing Paste for food processing industries.",
     category: "Paste",
-    stock: 50
+    productType: "Paste",
+    stock: 120,
+    minOrder: 10,
+    moq: 10,
+    unit: "kg",
+    quality: "Food Grade",
+    productGrade: "Commercial",
+    packaging: "20kg Drums",
+    packagingSize: "20kg",
+    leadTime: "5 Days",
+    exportQuality: "No",
+    availability: "In stock"
   },
+
   {
-    name: "Turmeric Ginger Shot",
+    name: "Hing Powder",
     image: {
-      url: "https://example.com/images/turmeric-ginger-shot.jpg",
-      filename: "turmeric-ginger-shot.jpg"
-    },
-    price: 150,
-    description: "A concentrated turmeric and ginger wellness shot for daily immunity.",
-    category: "Beverages",
-    stock: 95
-  },
-  {
-    name: "Black Pepper Turmeric Mix",
-    image: {
-      url: "https://example.com/images/turmeric-blackpepper.jpg",
-      filename: "turmeric-blackpepper.jpg"
-    },
-    price: 180,
-    description: "Turmeric powder blended with black pepper for better absorption.",
-    category: "Powder",
-    stock: 140
-  },
-  {
-    name: "Turmeric Face Mask",
-    image: {
-      url: "https://example.com/images/turmeric-face-mask.jpg",
-      filename: "turmeric-face-mask.jpg"
-    },
-    price: 340,
-    description: "Natural turmeric face mask for glowing and refreshed skin.",
-    category: "Beauty",
-    stock: 72
-  },
-  {
-    name: "Turmeric Soap Bar",
-    image: {
-      url: "https://example.com/images/turmeric-soap.jpg",
-      filename: "turmeric-soap.jpg"
-    },
-    price: 120,
-    description: "Gentle turmeric soap bar for natural skin care and cleansing.",
-    category: "Beauty",
-    stock: 110
-  },
-  {
-    name: "Turmeric Spice Kit",
-    image: {
-      url: "https://example.com/images/turmeric-spice-kit.jpg",
-      filename: "turmeric-spice-kit.jpg"
-    },
-    price: 520,
-    description: "A curated box of turmeric spice blends for cooking and healthy recipes.",
-    category: "Gift",
-    stock: 40
-  },
-  {
-    name: "Turmeric Honey Paste",
-    image: {
-      url: "https://example.com/images/turmeric-honey-paste.jpg",
-      filename: "turmeric-honey-paste.jpg"
-    },
-    price: 280,
-    description: "Turmeric-infused honey paste for a tasty and healing food topper.",
-    category: "Food",
-    stock: 65
-  },
-  {
-    name: "Turmeric Aromatic Candle",
-    image: {
-      url: "https://example.com/images/turmeric-candle.jpg",
-      filename: "turmeric-candle.jpg"
-    },
-    price: 260,
-    description: "A calming turmeric-scented candle for meditation and relaxation.",
-    category: "Home",
-    stock: 74
-  },
-  {
-    name: "Turmeric Energy Bites",
-    image: {
-      url: "https://example.com/images/turmeric-energy-bites.jpg",
-      filename: "turmeric-energy-bites.jpg"
-    },
-    price: 190,
-    description: "Nutritious turmeric energy bites made with nuts and seeds.",
-    category: "Snacks",
-    stock: 53
-  },
-  {
-    name: "Turmeric Face Serum",
-    image: {
-      url: "https://example.com/images/turmeric-serum.jpg",
-      filename: "turmeric-serum.jpg"
+      url: photo5,
+      filename: "hing-powder.jpg",
     },
     price: 500,
-    description: "Lightweight turmeric face serum designed for hydration and glow.",
-    category: "Beauty",
-    stock: 37
+    bulkPrice: 470,
+    wholesaleDiscount: 5,
+    description: "Fine Hing Powder suitable for spice blending and packaging.",
+    category: "Powder",
+    productType: "Powder",
+    stock: 150,
+    minOrder: 10,
+    moq: 10,
+    unit: "kg",
+    quality: "Food Grade",
+    productGrade: "Premium",
+    packaging: "25kg Bags",
+    packagingSize: "25kg",
+    leadTime: "5 Days",
+    exportQuality: "Yes",
+    availability: "In stock"
   },
   {
-    name: "Turmeric Recovery Balm",
+    name: "Organic Hing",
     image: {
-      url: "https://example.com/images/turmeric-balm.jpg",
-      filename: "turmeric-balm.jpg"
+      url: photo6,
+      filename: "organic-hing.jpg",
     },
-    price: 380,
-    description: "A soothing balm with turmeric to support muscle and joint recovery.",
-    category: "Wellness",
-    stock: 88
+    price: 1500,
+    bulkPrice: 1400,
+    wholesaleDiscount: 7,
+    description: "100% Organic Hing with natural aroma and exceptional quality.",
+    category: "Organic",
+    productType: "Hing",
+    stock: 40,
+    minOrder: 5,
+    moq: 5,
+    unit: "kg",
+    quality: "Organic",
+    productGrade: "Premium",
+    packaging: "25kg Bags",
+    packagingSize: "25kg",
+    leadTime: "10-12 Days",
+    exportQuality: "Yes",
+    availability: "In stock"
   }
 ];
+
 
 module.exports = products;

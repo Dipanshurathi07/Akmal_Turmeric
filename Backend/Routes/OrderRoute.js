@@ -159,7 +159,6 @@ router.get('/', protect, admin, async (req, res) => {
   try {
     const orders = await Order.find()
       .populate('user', 'name email')
-      .populate('items.product')
       .sort({ createdAt: -1 });
 
     return res.status(200).json(orders);
