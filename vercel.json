@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "buildCommand": "cd Frontend/Turmeric_WholeSale && npm install && npm run build",
+  "outputDirectory": "Frontend/Turmeric_WholeSale/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "env": {
+    "VITE_BACKEND_URL": "@vite_backend_url"
+  }
+}
