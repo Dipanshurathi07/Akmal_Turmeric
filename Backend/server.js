@@ -37,6 +37,7 @@ app.use(
       const allowedOrigins = [
         'http://localhost:5173',
         'http://localhost:5174',
+        "https://akmal-turmeric.vercel.app"
       ];
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
