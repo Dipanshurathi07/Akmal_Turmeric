@@ -1,260 +1,251 @@
 import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import { TrendingUp, Award, Globe } from "lucide-react";
+import { useSelector } from "react-redux";
+import { TrendingUp, Award, Globe, ArrowRight, Leaf, Shield, Truck, HeadphonesIcon } from "lucide-react";
 
 function Home() {
   const { user } = useSelector((state) => state.auth);
 
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="relative h-[600px] overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1514996937319-344454492b37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
-          alt="Wholesale hing supply"
-          className="w-full h-full object-cover"
-        />
+    <div className="bg-white dark:bg-gray-950">
 
-        <div className="absolute inset-0 bg-gradient-to-r from-yellow-900/80 to-orange-900/60"></div>
+      {/* ── Hero ── */}
+      <section className="bg-amber-950 dark:bg-amber-950 relative overflow-hidden">
+        {/* Subtle decorative circles */}
+        <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-amber-900/40 -translate-y-1/3 translate-x-1/3 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-amber-900/30 translate-y-1/3 -translate-x-1/4 pointer-events-none" />
 
-        <div className="absolute inset-0 flex items-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div className="max-w-2xl text-white">
-              <h1 className="text-5xl font-bold mb-4">
-                Wholesale Hing & Asafoetida
-              </h1>
-
-              <h2 className="text-3xl mb-6">
-                Business-to-Business Supply
-              </h2>
-
-              <p className="text-xl mb-8 text-white/90">
-                Source premium quality hing in bulk. Direct from trusted farms
-                to your manufacturing, retail, or export business.
-              </p>
-
-              <div className="flex gap-4">
-                <Link
-                  to="/products"
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg transition-colors inline-block"
-                >
-                  View Catalog
-                </Link>
-
-                <Link
-                  to="/contact"
-                  className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-8 py-3 rounded-lg transition-colors inline-block"
-                >
-                  Request Quote
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16 bg-yellow-50 dark:bg-slate-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-slate-900 dark:text-slate-100">
-              Why Partner With Us
-            </h2>
-
-            <p className="text-gray-600 dark:text-slate-300 max-w-2xl mx-auto">
-              Trusted by businesses worldwide for consistent quality and
-              reliable supply
-            </p>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1.5 mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+            <span className="text-amber-300 text-xs font-medium tracking-wide">Premium B2B Spice Supplier</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1 */}
-            <div className="text-center bg-white dark:bg-slate-800 p-6 rounded-xl shadow dark:shadow-slate-900/40">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-yellow-600 text-white rounded-full mb-4">
-                <TrendingUp size={32} />
-              </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 max-w-2xl">
+            Wholesale Hing &{" "}
+            <span className="text-amber-400">Asafoetida</span>
+          </h1>
 
-              <h3 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">
-                Wholesale Pricing
-              </h3>
-
-              <p className="text-gray-600 dark:text-slate-300">
-                Competitive bulk rates with volume discounts. Minimum order:
-                10kg
-              </p>
-            </div>
-
-            {/* Card 2 */}
-            <div className="text-center bg-white dark:bg-slate-800 p-6 rounded-xl shadow dark:shadow-slate-900/40">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-yellow-600 text-white rounded-full mb-4">
-                <Award size={32} />
-              </div>
-
-              <h3 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">
-                Trusted Quality
-              </h3>
-
-              <p className="text-gray-600 dark:text-slate-300">
-                Consistent grade control for food, pharma, and export clients.
-              </p>
-            </div>
-
-            {/* Card 3 */}
-            <div className="text-center bg-white dark:bg-slate-800 p-6 rounded-xl shadow dark:shadow-slate-900/40">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-yellow-600 text-white rounded-full mb-4">
-                <Globe size={32} />
-              </div>
-
-              <h3 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">
-                Global Shipping
-              </h3>
-
-              <p className="text-gray-600 dark:text-slate-300">
-                Reliable worldwide delivery with tracked shipments and custom
-                documentation.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Product Section */}
-      <section className="py-20 bg-white dark:bg-black">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-slate-900 dark:text-white">
-              Our Product Range
-            </h2>
-
-            <p className="text-slate-600 dark:text-slate-300">
-              Premium hing products designed for manufacturers, exporters, and
-              wholesale buyers.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Product 1 */}
-            <div className="bg-white dark:bg-black rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-900/5 dark:shadow-black/40 overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1615485500834-bc10199bc727?q=80&w=1080"
-                alt="Hing powder"
-                className="w-full h-64 object-cover"
-              />
-
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">
-                  Hing Powder
-                </h3>
-
-                <p className="text-slate-600 dark:text-slate-300 mb-4">
-                  Premium powder for spice blends, seasoning lines, and retail
-                  packs.
-                </p>
-
-                <Link
-                  to="/products"
-                  className="text-yellow-700 hover:text-yellow-800"
-                >
-                  View Details →
-                </Link>
-              </div>
-            </div>
-
-            {/* Product 2 */}
-            <div className="bg-white dark:bg-black rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-900/5 dark:shadow-black/40 overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1702041295331-840d4d9aa7c9?q=80&w=1080"
-                alt="Hing resin"
-                className="w-full h-64 object-cover"
-              />
-
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">
-                  Hing Resin
-                </h3>
-
-                <p className="text-slate-600 dark:text-slate-300 mb-4">
-                  Natural resin for bulk spice manufacturing and industrial use.
-                </p>
-
-                <Link
-                  to="/products"
-                  className="text-yellow-700 hover:text-yellow-800"
-                >
-                  View Details →
-                </Link>
-              </div>
-            </div>
-
-            {/* Product 3 */}
-            <div className="bg-white dark:bg-black rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-900/5 dark:shadow-black/40 overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1702041295331-840d4d9aa7c9?q=80&w=1080"
-                alt="Hing extract"
-                className="w-full h-64 object-cover"
-              />
-
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">
-                  Hing Extract
-                </h3>
-
-                <p className="text-slate-600 dark:text-slate-300 mb-4">
-                  Concentrated extract for flavors, fragrances, and pharma
-                  applications.
-                </p>
-
-                <Link
-                  to="/products"
-                  className="text-yellow-700 hover:text-yellow-800"
-                >
-                  View Details →
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-yellow-700 to-orange-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">
-            Ready to Start Your Order?
-          </h2>
-
-          <p className="text-xl mb-8">
-            Create an account to access wholesale pricing.
+          <p className="text-amber-200/80 text-base sm:text-lg leading-relaxed mb-8 max-w-xl">
+            Direct from trusted farms to your manufacturing, retail, or export business. Consistent quality, bulk pricing, reliable supply.
           </p>
 
-          <div className="flex gap-4 justify-center">
+          {/* CTA buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 mb-10">
+            <Link
+              to="/products"
+              className="bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-150 text-center text-sm sm:text-base flex items-center justify-center gap-2"
+            >
+              View catalog <ArrowRight size={16} />
+            </Link>
+            <Link
+              to="/contact"
+              className="bg-white/10 hover:bg-white/20 active:bg-white/30 border border-white/25 text-white font-medium px-6 py-3 rounded-xl transition-all duration-150 text-center text-sm sm:text-base"
+            >
+              Get a bulk quote
+            </Link>
+          </div>
+
+          {/* Trust stats */}
+          <div className="flex flex-row gap-6 sm:gap-10 border-t border-white/10 pt-8">
+            {[
+              { n: "500+", label: "Business clients" },
+              { n: "1+ yr", label: "Experience" },
+            ].map(({ n, label }) => (
+              <div key={label}>
+                <p className="text-xl sm:text-2xl font-bold text-amber-400">{n}</p>
+                <p className="text-xs text-amber-300/70 mt-0.5">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Why Partner ── */}
+      <section className="py-12 sm:py-16 bg-amber-50 dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 sm:mb-10">
+            <p className="text-xs font-semibold text-amber-700 dark:text-amber-500 uppercase tracking-widest mb-2">
+              Why choose us
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+              Built for businesses
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            {[
+              { icon: <Leaf size={20} strokeWidth={1.8} />, title: "Farm direct", desc: "Sourced from verified farms, no middlemen" },
+              { icon: <Shield size={20} strokeWidth={1.8} />, title: "FSSAI certified", desc: "Meets food, pharma & export standards" },
+              { icon: <Truck size={20} strokeWidth={1.8} />, title: "Bulk shipping", desc: "Pan-India & international logistics" },
+              { icon: <HeadphonesIcon size={20} strokeWidth={1.8} />, title: "Dedicated support", desc: "Account manager for every B2B buyer" },
+            ].map(({ icon, title, desc }) => (
+              <div
+                key={title}
+                className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl p-4 sm:p-5"
+              >
+                <div className="w-9 h-9 bg-amber-100 dark:bg-amber-900 rounded-xl flex items-center justify-center text-amber-800 dark:text-amber-300 mb-3">
+                  {icon}
+                </div>
+                <p className="text-sm font-semibold text-gray-900 dark:text-white mb-1">{title}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Features (3 big cards) ── */}
+      <section className="py-12 sm:py-16 bg-white dark:bg-gray-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 sm:mb-10">
+            <p className="text-xs font-semibold text-amber-700 dark:text-amber-500 uppercase tracking-widest mb-2">
+              Our advantage
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+              Why partner with us
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+            {[
+              {
+                icon: <TrendingUp size={24} strokeWidth={1.8} />,
+                title: "Wholesale pricing",
+                desc: "Competitive bulk rates with volume discounts. Minimum order: 10 kg.",
+              },
+              {
+                icon: <Award size={24} strokeWidth={1.8} />,
+                title: "Trusted quality",
+                desc: "Consistent grade control for food, pharma, and export clients.",
+              },
+              {
+                icon: <Globe size={24} strokeWidth={1.8} />,
+                title: "Global shipping",
+                desc: "Worldwide delivery with tracked shipments and custom documentation.",
+              },
+            ].map(({ icon, title, desc }) => (
+              <div
+                key={title}
+                className="border border-gray-100 dark:border-gray-800 rounded-2xl p-5 sm:p-6 hover:border-amber-200 dark:hover:border-amber-800 transition-all duration-200"
+              >
+                <div className="w-10 h-10 bg-amber-800 rounded-xl flex items-center justify-center text-amber-100 mb-4">
+                  {icon}
+                </div>
+                <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">{title}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Products ── */}
+      <section className="py-12 sm:py-16 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-end justify-between mb-8">
+            <div>
+              <p className="text-xs font-semibold text-amber-700 dark:text-amber-500 uppercase tracking-widest mb-2">
+                Products
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+                Our range
+              </h2>
+            </div>
+            <Link
+              to="/products"
+              className="text-sm text-amber-800 dark:text-amber-400 font-medium flex items-center gap-1 hover:gap-2 transition-all"
+            >
+              View all <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+            {[
+              {
+                img: "https://images.unsplash.com/photo-1615485500834-bc10199bc727?q=80&w=800",
+                alt: "Hing powder",
+                title: "Hing Powder",
+                desc: "Premium powder for spice blends, seasoning lines, and retail packs.",
+              },
+              {
+                img: "https://images.unsplash.com/photo-1702041295331-840d4d9aa7c9?q=80&w=800",
+                alt: "Hing resin",
+                title: "Hing Resin",
+                desc: "Natural resin for bulk spice manufacturing and industrial use.",
+              },
+              {
+                img: "https://images.unsplash.com/photo-1599690925058-90e1a0b56154?q=80&w=800",
+                alt: "Hing extract",
+                title: "Hing Extract",
+                desc: "Concentrated extract for flavors, fragrances, and pharma applications.",
+              },
+            ].map(({ img, alt, title, desc }) => (
+              <div
+                key={title}
+                className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden group hover:shadow-lg dark:hover:shadow-black/30 transition-all duration-300"
+              >
+                <div className="h-44 sm:h-48 overflow-hidden bg-amber-50 dark:bg-gray-700">
+                  <img
+                    src={img}
+                    alt={alt}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-4 sm:p-5">
+                  <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-1.5">{title}</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-4">{desc}</p>
+                  <Link
+                    to="/products"
+                    className="inline-flex items-center gap-1.5 text-sm text-amber-800 dark:text-amber-400 font-medium hover:gap-2.5 transition-all duration-150"
+                  >
+                    View details <ArrowRight size={13} />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA Banner ── */}
+      <section className="py-12 sm:py-16 bg-amber-800 dark:bg-amber-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+            Ready to start your order?
+          </h2>
+          <p className="text-amber-200 text-sm sm:text-base mb-8 max-w-md mx-auto">
+            Create an account to access wholesale pricing and place bulk orders.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             {user ? (
               <>
                 <Link
                   to="/products"
-                  className="bg-white text-yellow-700 px-8 py-3 rounded-lg hover:bg-yellow-50"
+                  className="bg-white text-amber-900 hover:bg-amber-50 font-semibold px-6 py-3 rounded-xl transition-all text-sm sm:text-base"
                 >
-                  View Catalog
+                  View catalog
                 </Link>
                 <Link
                   to="/orders"
-                  className="bg-white/20 hover:bg-white/30 px-8 py-3 rounded-lg"
+                  className="bg-white/15 hover:bg-white/25 border border-white/30 text-white font-medium px-6 py-3 rounded-xl transition-all text-sm sm:text-base"
                 >
-                  My Orders
+                  My orders
                 </Link>
               </>
             ) : (
               <>
                 <Link
                   to="/verify-email"
-                  className="bg-white text-yellow-700 px-8 py-3 rounded-lg hover:bg-yellow-50"
+                  className="bg-white text-amber-900 hover:bg-amber-50 font-semibold px-6 py-3 rounded-xl transition-all text-sm sm:text-base"
                 >
-                  Create Account
+                  Create account
                 </Link>
-
                 <Link
                   to="/login"
-                  className="bg-white/20 hover:bg-white/30 px-8 py-3 rounded-lg"
+                  className="bg-white/15 hover:bg-white/25 border border-white/30 text-white font-medium px-6 py-3 rounded-xl transition-all text-sm sm:text-base"
                 >
                   Login
                 </Link>
@@ -263,6 +254,7 @@ function Home() {
           </div>
         </div>
       </section>
+
     </div>
   );
 }
