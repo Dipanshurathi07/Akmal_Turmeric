@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 const { otpGenerator, htmlTemplate } = require("../Utils/otpandHtml");
 const { sendEmail } = require("../Services/email");
 const Otp = require("../Models/Otp");
-const { protect } = require('../Middleware/Auth');
+const { protect } = require("../MiddleWare/Auth");
 const {admin} = require("../MiddleWare/Auth");
 
 
