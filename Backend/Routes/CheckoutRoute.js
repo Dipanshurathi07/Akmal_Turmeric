@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Checkout = require('../Models/Checkout');
 const Product = require('../Models/Products');
-const { protect, admin } = require('../Middleware/Auth');
+const { protect, admin } = require('../MiddleWare/Auth');
 
 router.post('/create', protect, async (req, res) => {
   try {

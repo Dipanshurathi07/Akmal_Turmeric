@@ -5,7 +5,7 @@ const Order = require('../Models/Order');
 const Product = require('../Models/Products');
 const Cart = require('../Models/Cart');
 
-const { protect, admin } = require('../Middleware/Auth');
+const { protect, admin } = require('../MiddleWare/Auth');
 
 const generateOrderNumber = () => {
   return `ORD-${Date.now()}-${Math.floor(
