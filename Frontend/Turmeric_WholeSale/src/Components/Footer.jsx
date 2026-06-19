@@ -1,155 +1,182 @@
-import { Sparkles, Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, ArrowUpRight } from "lucide-react";
+
+const INSTAGRAM_URL = "https://www.instagram.com/asfoetida_hing?utm_source=qr";
+
+const quickLinks = ["Products", "Dashboard", "Contact Us", "About Us"];
+const resources = [
+  "Certifications",
+  "Quality Reports",
+  "Shipping Info",
+  "Terms & Conditions",
+];
 
 export default function Footer() {
   return (
-    <footer className="bg-[#03152F] text-gray-300 pt-14">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
-        
+    <footer className="relative bg-[#1C1410] text-stone-300 pt-20 overflow-hidden">
+      {/* Ambient saffron glow, signature accent */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full opacity-[0.08] blur-3xl"
+        style={{
+          background:
+            "radial-gradient(circle, #E8A33D 0%, transparent 70%)",
+        }}
+      />
+
+      <div className="relative max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+        {/* Top: brand mark */}
+        <div className="flex flex-col gap-3 mb-16 max-w-xl">
+          <span className="text-[13px] tracking-[0.25em] uppercase text-[#E8A33D] font-medium">
+            Est. Wholesale &amp; Export
+          </span>
+          <h2 className="font-serif text-[2rem] md:text-[2.5rem] leading-[1.1] text-stone-50">
+            Paka Nafsa Trading
+            <span className="block text-stone-500">Private Limited</span>
+          </h2>
+          <p className="text-stone-400 leading-7 text-[16px] mt-2">
+            Sourced, graded, and shipped from Delhi &mdash; hing trusted by
+            kitchens and traders across the country.
+          </p>
+        </div>
+
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-
-          {/* Logo + About */}
-          <div>
-            <div className="flex items-center gap-2 mb-5">
-              <Sparkles className="text-yellow-400" size={28} />
-              <h2 className="text-2xl font-medium text-white">
-                Paka Nafsa Trading Private Limited
-              </h2>
-            </div>
-
-            <p className="text-gray-400 leading-8 text-[17px]">
-              Leading hing wholesale supplier and exporter. Quality you can
-              trust, service you can rely on.
-            </p>
-          </div>
-
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1.3fr] gap-x-10 gap-y-12 pb-14 border-t border-stone-50/10 pt-14">
           {/* Quick Links */}
-          <div>
-            <h3 className="text-white text-2xl mb-5 font-medium">
+          <nav aria-label="Quick links">
+            <h3 className="text-[13px] tracking-[0.2em] uppercase text-stone-500 mb-6 font-medium">
               Quick Links
             </h3>
-
-            <ul className="space-y-4 text-[18px]">
-              <li>
-                <a
-                  href="#"
-                  className="hover:text-yellow-400 transition"
-                >
-                  Products
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="#"
-                  className="hover:text-yellow-400 transition"
-                >
-                  Dashboard
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="#"
-                  className="hover:text-yellow-400 transition"
-                >
-                  Contact Us
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="#"
-                  className="hover:text-yellow-400 transition"
-                >
-                  About Us
-                </a>
-              </li>
+            <ul className="space-y-4 text-[16px]">
+              {quickLinks.map((label) => (
+                <li key={label}>
+                  <a
+                    href="#"
+                    className="group inline-flex items-center gap-1.5 text-stone-300 hover:text-[#E8A33D] transition-colors duration-200"
+                  >
+                    {label}
+                    <ArrowUpRight
+                      size={14}
+                      className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
+                    />
+                  </a>
+                </li>
+              ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Resources */}
-          <div>
-            <h3 className="text-white text-2xl mb-5 font-medium">
+          <nav aria-label="Resources">
+            <h3 className="text-[13px] tracking-[0.2em] uppercase text-stone-500 mb-6 font-medium">
               Resources
             </h3>
-
-            <ul className="space-y-4 text-[18px]">
-              <li>
-                <a
-                  href="#"
-                  className="hover:text-yellow-400 transition"
-                >
-                  Certifications
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="#"
-                  className="hover:text-yellow-400 transition"
-                >
-                  Quality Reports
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="#"
-                  className="hover:text-yellow-400 transition"
-                >
-                  Shipping Info
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="#"
-                  className="hover:text-yellow-400 transition"
-                >
-                  Terms & Conditions
-                </a>
-              </li>
+            <ul className="space-y-4 text-[16px]">
+              {resources.map((label) => (
+                <li key={label}>
+                  <a
+                    href="#"
+                    className="group inline-flex items-center gap-1.5 text-stone-300 hover:text-[#E8A33D] transition-colors duration-200"
+                  >
+                    {label}
+                    <ArrowUpRight
+                      size={14}
+                      className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
+                    />
+                  </a>
+                </li>
+              ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Contact */}
-          <div>
-            <h3 className="text-white text-2xl mb-5 font-medium">
+          <div className="sm:col-span-2 lg:col-span-1">
+            <h3 className="text-[13px] tracking-[0.2em] uppercase text-stone-500 mb-6 font-medium">
               Contact
             </h3>
+            <div className="space-y-4 text-[16px]">
+              <a
+                href="tel:+917317643062"
+                className="flex items-start gap-3 text-stone-300 hover:text-[#E8A33D] transition-colors duration-200 w-fit"
+              >
+                <Phone size={18} className="mt-0.5 text-stone-500" />
+                +91 7317643062
+              </a>
 
-            <div className="space-y-5 text-[18px]">
+              <a
+                href="mailto:sales@pakaNafsa.com"
+                className="flex items-start gap-3 text-stone-300 hover:text-[#E8A33D] transition-colors duration-200 w-fit"
+              >
+                <Mail size={18} className="mt-0.5 text-stone-500" />
+                sales@pakaNafsa.com
+              </a>
 
               <div className="flex items-start gap-3">
-                <Phone size={22} className="mt-1 text-gray-400" />
-                <p>+91 7317643062</p>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Mail size={22} className="mt-1 text-gray-400" />
-                <p>sales@pakaNafsa.com</p>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <MapPin size={22} className="mt-1 text-gray-400" />
+                <MapPin size={18} className="mt-0.5 text-stone-500 shrink-0" />
                 <p>
-                  B39-40, Basement, Lajpat Nagar 1,
+                  B39&ndash;40, Basement, Lajpat Nagar 1,
                   <br />
                   New Delhi, India
                 </p>
               </div>
-
             </div>
+          </div>
+
+          {/* Follow / social card */}
+          <div className="sm:col-span-2 lg:col-span-1">
+            <h3 className="text-[13px] tracking-[0.2em] uppercase text-stone-500 mb-6 font-medium">
+              Follow
+            </h3>
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-4 rounded-2xl border border-stone-50/10 bg-stone-50/[0.03] p-4 hover:border-[#E8A33D]/40 hover:bg-stone-50/[0.05] transition-all duration-200"
+            >
+              <span className="w-11 h-11 shrink-0 flex items-center justify-center rounded-full bg-gradient-to-tr from-[#E8A33D] via-[#D6573F] to-[#A23B6C] text-white text-lg">
+                <i className="fa-brands fa-instagram" aria-hidden="true"></i>
+              </span>
+              <span className="flex flex-col">
+                <span className="text-stone-100 group-hover:text-[#E8A33D] transition-colors duration-200">
+                  @asfoetida_hing
+                </span>
+                <span className="text-stone-500 text-sm">
+                  Behind the scenes &amp; new batches
+                </span>
+              </span>
+            </a>
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-gray-800 mt-12"></div>
+        {/* Divider with signature seed-pod motif */}
+        <div className="relative flex items-center py-2">
+          <div className="flex-1 h-px bg-stone-50/10" />
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            fill="none"
+            className="mx-4 shrink-0"
+            aria-hidden="true"
+          >
+            <circle cx="14" cy="14" r="3" fill="#E8A33D" />
+            <circle
+              cx="14"
+              cy="14"
+              r="9"
+              stroke="#E8A33D"
+              strokeOpacity="0.35"
+              strokeWidth="1"
+            />
+          </svg>
+          <div className="flex-1 h-px bg-stone-50/10" />
+        </div>
 
         {/* Bottom */}
-        <div className="py-8 text-center text-gray-500 text-lg">
-          © 2026 Paka Nafsa Trading Private Limited. All rights reserved.
+        <div className="py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-stone-500 text-[14px]">
+          <p>
+            &copy; 2026 Paka Nafsa Trading Private Limited. All rights
+            reserved.
+          </p>
+          <p className="text-stone-600">Wholesale hing, sourced with care.</p>
         </div>
       </div>
     </footer>

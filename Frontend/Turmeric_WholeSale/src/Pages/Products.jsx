@@ -123,9 +123,9 @@ function Products() {
                     <span className="text-2xl font-semibold text-yellow-700">
                       {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(product.price)}
                     </span>
-                    {product.bulkPrice ? (
+                    {/* {product.bulkPrice ? (
                       <p className="text-xs text-gray-500">Bulk: ₹{product.bulkPrice}</p>
-                    ) : null}
+                    ) : null} */}
                   </div>
 
                   <span className="text-gray-500">

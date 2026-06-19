@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { TrendingUp, Award, Globe, ArrowRight, Leaf, Shield, Truck, HeadphonesIcon } from "lucide-react";
+import { getImageUrl } from "../Utils/getImageUrl";
 
 function Home() {
   const { user } = useSelector((state) => state.auth);
+  const { products } = useSelector((state) => state.products);
 
   return (
     <div className="bg-white dark:bg-gray-950">
@@ -163,19 +165,19 @@ function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             {[
               {
-                img: "https://images.unsplash.com/photo-1615485500834-bc10199bc727?q=80&w=800",
+                img: getImageUrl(products[0]?.image) || "https://images.unsplash.com/photo-1702041295331-840d4d9aa7c9?q=80&w=800",
                 alt: "Hing powder",
                 title: "Hing Powder",
                 desc: "Premium powder for spice blends, seasoning lines, and retail packs.",
               },
               {
-                img: "https://images.unsplash.com/photo-1702041295331-840d4d9aa7c9?q=80&w=800",
+                img: getImageUrl(products[1]?.image) || "https://images.unsplash.com/photo-1702041295331-840d4d9aa7c9?q=80&w=800",
                 alt: "Hing resin",
                 title: "Hing Resin",
                 desc: "Natural resin for bulk spice manufacturing and industrial use.",
               },
               {
-                img: "https://images.unsplash.com/photo-1599690925058-90e1a0b56154?q=80&w=800",
+                img: getImageUrl(products[2]?.image) || "https://images.unsplash.com/photo-1599690925058-90e1a0b56154?q=80&w=800",
                 alt: "Hing extract",
                 title: "Hing Extract",
                 desc: "Concentrated extract for flavors, fragrances, and pharma applications.",

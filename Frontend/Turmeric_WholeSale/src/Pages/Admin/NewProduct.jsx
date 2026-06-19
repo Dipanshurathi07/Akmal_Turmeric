@@ -16,18 +16,13 @@ const initialState = {
   description: '',
   category: '',
   stock: '',
-  minOrder: '',
-  moq: '',
+  minOrder: '1',
   unit: 'kg',
   productType: '',
   quality: '',
-  productGrade: '',
-  packaging: '',
-  packagingSize: '',
   bulkPrice: '',
   wholesaleDiscount: '',
   leadTime: '',
-  exportQuality: '',
   availability: 'In stock',
 };
 
@@ -159,11 +154,6 @@ const NewProduct = () => {
                   placeholder="1" className={inputCls} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">MOQ</label>
-                <input name="moq" type="number" min="1" value={form.moq} onChange={handleChange}
-                  placeholder="1" className={inputCls} />
-              </div>
-              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Availability</label>
                 <select name="availability" value={form.availability} onChange={handleChange} className={inputCls}>
                   {AVAILABILITY.map(a => <option key={a} value={a}>{a}</option>)}
@@ -201,10 +191,6 @@ const NewProduct = () => {
               {[
                 { name: 'productType', label: 'Product Type', placeholder: 'e.g. Organic' },
                 { name: 'quality', label: 'Quality', placeholder: 'e.g. Premium' },
-                { name: 'productGrade', label: 'Product Grade', placeholder: 'e.g. Grade A' },
-                { name: 'packaging', label: 'Packaging', placeholder: 'e.g. Jute bag' },
-                { name: 'packagingSize', label: 'Packaging Size', placeholder: 'e.g. 50kg' },
-                { name: 'exportQuality', label: 'Export Quality', placeholder: 'e.g. APEDA certified' },
               ].map(({ name, label, placeholder }) => (
                 <div key={name}>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">{label}</label>

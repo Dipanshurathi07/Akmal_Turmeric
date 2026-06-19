@@ -83,7 +83,7 @@ function ProductDetails() {
                 <p className="text-3xl font-semibold text-yellow-700">₹{product.price}</p>
                 <p className="text-sm text-gray-500">{product.unit}</p>
                 {product.bulkPrice ? <p className="text-xs text-gray-500">Bulk Price: ₹{product.bulkPrice}</p> : null}
-                {product.wholesaleDiscount ? <p className="text-xs text-gray-500">Wholesale discount: {product.wholesaleDiscount}%</p> : null}
+                {/* {product.wholesaleDiscount ? <p className="text-xs text-gray-500">Wholesale discount: {product.wholesaleDiscount}%</p> : null} */}
               </div>
               <div className="rounded-2xl bg-gray-50 p-4">
                 <p className="text-sm uppercase tracking-wide text-gray-500">Minimum order</p>
@@ -99,22 +99,16 @@ function ProductDetails() {
                   <p className="text-lg font-semibold text-gray-800">{product.productType}</p>
                 </div>
               )}
-              {product.packagingSize && (
+              {/* {product.packagingSize && (
                 <div className="rounded-2xl bg-gray-50 p-4">
                   <p className="text-sm uppercase tracking-wide text-gray-500">Packaging</p>
                   <p className="text-lg font-semibold text-gray-800">{product.packagingSize}</p>
                 </div>
-              )}
+              )} */}
               {product.leadTime && (
                 <div className="rounded-2xl bg-gray-50 p-4">
                   <p className="text-sm uppercase tracking-wide text-gray-500">Lead Time</p>
                   <p className="text-lg font-semibold text-gray-800">{product.leadTime}</p>
-                </div>
-              )}
-              {product.exportQuality && (
-                <div className="rounded-2xl bg-gray-50 p-4">
-                  <p className="text-sm uppercase tracking-wide text-gray-500">Export Quality</p>
-                  <p className="text-lg font-semibold text-gray-800">{product.exportQuality}</p>
                 </div>
               )}
             </div>

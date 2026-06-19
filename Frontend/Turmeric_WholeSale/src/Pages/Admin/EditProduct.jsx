@@ -25,7 +25,6 @@ const EditProduct = () => {
     category: "",
     stock: "",
     minOrder: "",
-    moq: "",
     unit: "kg",
     availability: "In stock",
   });
@@ -46,17 +45,12 @@ const EditProduct = () => {
         category: product.category || '',
         stock: product.stock ?? '',
         minOrder: product.minOrder ?? '',
-        moq: product.moq ?? '',
         unit: product.unit || 'kg',
         productType: product.productType || '',
         quality: product.quality || '',
-        productGrade: product.productGrade || '',
-        packaging: product.packaging || '',
-        packagingSize: product.packagingSize || '',
         bulkPrice: product.bulkPrice ?? '',
         wholesaleDiscount: product.wholesaleDiscount ?? '',
         leadTime: product.leadTime || '',
-        exportQuality: product.exportQuality || '',
         availability: product.availability || 'In stock',
       });
       if (product.image?.url || product.image) {
@@ -195,11 +189,7 @@ const EditProduct = () => {
                 <input name="minOrder" type="number" min="1" value={form.minOrder} onChange={handleChange}
                   placeholder="1" className={inputCls} />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">MOQ</label>
-                <input name="moq" type="number" min="1" value={form.moq} onChange={handleChange}
-                  placeholder="1" className={inputCls} />
-              </div>
+             
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Availability</label>
                 <select name="availability" value={form.availability} onChange={handleChange} className={inputCls}>
@@ -238,10 +228,6 @@ const EditProduct = () => {
               {[
                 { name: 'productType', label: 'Product Type', placeholder: 'e.g. Organic' },
                 { name: 'quality', label: 'Quality', placeholder: 'e.g. Premium' },
-                { name: 'productGrade', label: 'Product Grade', placeholder: 'e.g. Grade A' },
-                { name: 'packaging', label: 'Packaging', placeholder: 'e.g. Jute bag' },
-                { name: 'packagingSize', label: 'Packaging Size', placeholder: 'e.g. 50kg' },
-                { name: 'exportQuality', label: 'Export Quality', placeholder: 'e.g. APEDA certified' },
               ].map(({ name, label, placeholder }) => (
                 <div key={name}>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">{label}</label>

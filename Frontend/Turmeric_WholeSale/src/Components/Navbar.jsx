@@ -60,10 +60,11 @@ function Navbar() {
     navigate("/login");
   };
 
+  // Slightly bigger, bolder desktop nav links
   const desktopLink = (path, label) => (
     <Link
       to={path}
-      className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
+      className={`px-4 py-2.5 rounded-lg text-[15px] font-semibold tracking-tight transition-all duration-150 ${
         isActive(path)
           ? "text-amber-800 bg-amber-50 dark:text-amber-300 dark:bg-amber-950"
           : "text-gray-600 hover:text-amber-800 hover:bg-amber-50 dark:text-gray-300 dark:hover:text-amber-300 dark:hover:bg-amber-950"
@@ -93,6 +94,19 @@ function Navbar() {
     </Link>
   );
 
+  // Reusable icon-button with badge, used in the right-side icon group
+  const iconButton = (to, Icon, count, hoverColorClasses) => (
+    <Link
+      to={to}
+      className={`relative p-3 text-gray-500 dark:text-gray-400 rounded-xl transition-all ${hoverColorClasses}`}
+    >
+      <Icon size={26} strokeWidth={1.8} />
+      {count > 0 && (
+        <span className="absolute -top-1 -right-1 bg-current text-[10px] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center" />
+      )}
+    </Link>
+  );
+
   return (
     <nav
       className={`bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 transition-shadow duration-200 ${
@@ -100,63 +114,70 @@ function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 sm:h-16">
+        {/* relative wrapper lets us truly center the nav links regardless of
+            how wide the logo or right-side icon group are */}
+        <div className="relative flex items-center justify-between h-16 sm:h-24">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 flex-shrink-0 group">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-amber-800 flex items-center justify-center transition-transform duration-200 group-hover:scale-105">
-              <Sparkles className="text-amber-100 w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
+          <Link to="/" className="flex items-center gap-3 sm:gap-4 flex-shrink-0 group z-10">
+            <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl bg-amber-800 flex items-center justify-center transition-transform duration-200 group-hover:scale-105 flex-shrink-0">
+              <Sparkles className="text-amber-100 w-5 h-5 sm:w-7 sm:h-7" strokeWidth={2.5} />
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="text-xs sm:text-sm font-semibold text-amber-800 dark:text-amber-400 tracking-tight whitespace-nowrap">
+              <span className="text-sm sm:text-xl font-semibold text-amber-800 dark:text-amber-400 tracking-tight whitespace-nowrap">
                 Paka Nafsa Trading
               </span>
-              <span className="text-[9px] sm:text-[10px] text-gray-400 dark:text-gray-500 hidden sm:block">
+              <span className="text-xs sm:text-sm text-gray-400 dark:text-gray-500 hidden sm:block">
                 Private Limited
               </span>
             </div>
           </Link>
 
-          {/* Desktop center nav */}
-          <div className="hidden md:flex items-center gap-1 flex-1 mx-6">
+          {/* Desktop center nav — absolutely centered in the navbar */}
+          <div className="hidden md:flex items-center gap-2 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             {desktopLink("/products", "Products")}
             {desktopLink("/contact", "Contact")}
             {!isAuthenticated && desktopLink("/login", "Login")}
             {isAuthenticated && isAdmin && desktopLink("/admin/dashboard", "Admin")}
-
-            <div className="flex items-center gap-1 ml-auto">
-              <Link
-                to="/cart"
-                className="relative p-2 text-gray-500 hover:text-amber-800 hover:bg-amber-50 dark:text-gray-400 dark:hover:text-amber-300 dark:hover:bg-amber-950 rounded-xl transition-all"
-              >
-                <ShoppingCart size={20} strokeWidth={1.8} />
-                {cartCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 bg-amber-800 text-amber-100 text-[9px] font-bold w-[15px] h-[15px] rounded-full flex items-center justify-center">
-                    {cartCount > 9 ? "9+" : cartCount}
-                  </span>
-                )}
-              </Link>
-              <Link
-                to="/orders"
-                className="relative p-2 text-gray-500 hover:text-emerald-700 hover:bg-emerald-50 dark:text-gray-400 dark:hover:text-emerald-400 dark:hover:bg-emerald-950 rounded-xl transition-all"
-              >
-                <Package size={20} strokeWidth={1.8} />
-                {confirmedCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 bg-emerald-700 text-emerald-100 text-[9px] font-bold w-[15px] h-[15px] rounded-full flex items-center justify-center">
-                    {confirmedCount > 9 ? "9+" : confirmedCount}
-                  </span>
-                )}
-              </Link>
-            </div>
           </div>
 
-          {/* Desktop right */}
-          <div className="hidden md:flex items-center gap-2">
+          {/* Desktop right — icons + theme toggle + profile, all in one group */}
+          <div className="hidden md:flex items-center gap-1.5 z-10">
+
+            {isAuthenticated && (
+              <>
+                <Link
+                  to="/cart"
+                  className="relative p-3 text-gray-500 hover:text-amber-800 hover:bg-amber-50 dark:text-gray-400 dark:hover:text-amber-300 dark:hover:bg-amber-950 rounded-xl transition-all"
+                >
+                  <ShoppingCart size={26} strokeWidth={1.8} />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-amber-800 text-amber-100 text-[10px] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center">
+                      {cartCount > 9 ? "9+" : cartCount}
+                    </span>
+                  )}
+                </Link>
+                <Link
+                  to="/orders"
+                  className="relative p-3 text-gray-500 hover:text-emerald-700 hover:bg-emerald-50 dark:text-gray-400 dark:hover:text-emerald-400 dark:hover:bg-emerald-950 rounded-xl transition-all"
+                >
+                  <Package size={26} strokeWidth={1.8} />
+                  {confirmedCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-emerald-700 text-emerald-100 text-[10px] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center">
+                      {confirmedCount > 9 ? "9+" : confirmedCount}
+                    </span>
+                  )}
+                </Link>
+                <div className="w-px h-6 bg-gray-200 dark:bg-gray-700 mx-1" />
+              </>
+            )}
+
             <ThemeToggle />
+
             {!isAuthenticated ? (
               <Link
                 to="/verify-email"
-                className="bg-amber-800 hover:bg-amber-900 text-amber-50 px-4 py-2 rounded-xl text-sm font-medium transition-all"
+                className="bg-amber-800 hover:bg-amber-900 text-amber-50 px-5 py-2.5 rounded-xl text-base font-medium transition-all ml-1"
               >
                 Sign up
               </Link>
@@ -164,44 +185,44 @@ function Navbar() {
               <div className="relative">
                 <button
                   onClick={() => setProfileOpen((p) => !p)}
-                  className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 pl-1.5 pr-3 py-1.5 rounded-full transition-all"
+                  className="flex items-center gap-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 pl-2 pr-3 py-2 rounded-full transition-all ml-1"
                 >
-                  <span className="w-7 h-7 rounded-full bg-amber-100 dark:bg-amber-900 border border-amber-300 dark:border-amber-700 flex items-center justify-center text-xs font-semibold text-amber-800 dark:text-amber-300">
+                  <span className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900 border border-amber-300 dark:border-amber-700 flex items-center justify-center text-sm font-semibold text-amber-800 dark:text-amber-300">
                     {userInitials}
                   </span>
-                  <span className="hidden lg:inline text-sm font-medium">
+                  <span className="hidden lg:inline text-base font-medium">
                     {user?.name?.split(" ")[0] || "Profile"}
                   </span>
                   <ChevronDown
-                    size={14}
+                    size={16}
                     className={`transition-transform duration-200 ${profileOpen ? "rotate-180" : ""}`}
                   />
                 </button>
 
                 {profileOpen && (
-                  <div className="absolute right-0 mt-2 w-68 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl overflow-hidden z-50">
-                    <div className="px-4 py-3.5 border-b border-gray-100 dark:border-gray-800 bg-amber-50 dark:bg-amber-950 flex items-center gap-3">
-                      <span className="w-9 h-9 rounded-full bg-white dark:bg-gray-800 border border-amber-300 dark:border-amber-700 flex items-center justify-center text-sm font-semibold text-amber-800 dark:text-amber-300 flex-shrink-0">
+                  <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl overflow-hidden z-50">
+                    <div className="px-4 py-4 border-b border-gray-100 dark:border-gray-800 bg-amber-50 dark:bg-amber-950 flex items-center gap-3">
+                      <span className="w-10 h-10 rounded-full bg-white dark:bg-gray-800 border border-amber-300 dark:border-amber-700 flex items-center justify-center text-base font-semibold text-amber-800 dark:text-amber-300 flex-shrink-0">
                         {userInitials}
                       </span>
                       <div className="overflow-hidden">
-                        <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">{user?.name || "N/A"}</p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user?.email || "N/A"}</p>
+                        <p className="text-base font-semibold text-gray-900 dark:text-white truncate">{user?.name || "N/A"}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{user?.email || "N/A"}</p>
                       </div>
                     </div>
                     <div className="p-1.5">
                       <Link
                         to="/profile"
                         onClick={() => setProfileOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-amber-800 dark:hover:text-amber-300 rounded-lg transition-all"
+                        className="flex items-center gap-3 px-3 py-3 text-base text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-amber-800 dark:hover:text-amber-300 rounded-lg transition-all"
                       >
-                        <User size={16} /> View profile
+                        <User size={18} /> View profile
                       </Link>
                       <button
                         onClick={handleLogout}
-                        className="flex items-center gap-3 px-3 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-950 w-full rounded-lg transition-all"
+                        className="flex items-center gap-3 px-3 py-3 text-base text-red-600 hover:bg-red-50 dark:hover:bg-red-950 w-full rounded-lg transition-all"
                       >
-                        <LogOut size={16} /> Logout
+                        <LogOut size={18} /> Logout
                       </button>
                     </div>
                   </div>
@@ -210,35 +231,22 @@ function Navbar() {
             )}
           </div>
 
-          {/* Mobile right — ThemeToggle + icon badges + hamburger */}
-          <div className="flex md:hidden items-center gap-0.5">
+          {/* Mobile right — ThemeToggle + cart icon + hamburger */}
+          <div className="flex md:hidden items-center gap-1 z-10">
             <ThemeToggle />
 
             {isAuthenticated && (
-              <>
-                <Link
-                  to="/cart"
-                  className="relative p-2 text-gray-500 dark:text-gray-400 hover:text-amber-800 rounded-xl transition-all"
-                >
-                  <ShoppingCart size={19} strokeWidth={1.8} />
-                  {cartCount > 0 && (
-                    <span className="absolute top-0.5 right-0.5 bg-amber-800 text-amber-100 text-[8px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center">
-                      {cartCount > 9 ? "9+" : cartCount}
-                    </span>
-                  )}
-                </Link>
-                <Link
-                  to="/orders"
-                  className="relative p-2 text-gray-500 dark:text-gray-400 hover:text-emerald-700 rounded-xl transition-all"
-                >
-                  <Package size={19} strokeWidth={1.8} />
-                  {confirmedCount > 0 && (
-                    <span className="absolute top-0.5 right-0.5 bg-emerald-700 text-emerald-100 text-[8px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center">
-                      {confirmedCount > 9 ? "9+" : confirmedCount}
-                    </span>
-                  )}
-                </Link>
-              </>
+              <Link
+                to="/cart"
+                className="relative p-2.5 text-gray-500 dark:text-gray-400 hover:text-amber-800 hover:bg-amber-50 dark:hover:bg-amber-950 rounded-xl transition-all"
+              >
+                <ShoppingCart size={22} strokeWidth={1.8} />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-amber-800 text-amber-100 text-[8px] font-bold w-[16px] h-[16px] rounded-full flex items-center justify-center">
+                    {cartCount > 9 ? "9+" : cartCount}
+                  </span>
+                )}
+              </Link>
             )}
 
             <button
@@ -255,37 +263,37 @@ function Navbar() {
       {/* Mobile dropdown menu */}
       {menuOpen && (
         <div className="md:hidden border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
-          <div className="px-3 py-3 space-y-0.5">
+          <div className="px-4 py-4 space-y-1">
 
-            <p className="text-[10px] font-semibold text-gray-400 dark:text-gray-600 uppercase tracking-widest px-3 pb-1 pt-1">
+            <p className="text-[11px] font-semibold text-gray-400 dark:text-gray-600 uppercase tracking-widest px-4 pb-2 pt-2">
               Browse
             </p>
-            {mobileLink("/products", <ShoppingCart size={18} strokeWidth={1.8} />, "Products")}
-            {mobileLink("/contact", <span className="text-base leading-none">💬</span>, "Contact")}
+            {mobileLink("/products", <ShoppingCart size={20} strokeWidth={1.8} />, "Products")}
+            {mobileLink("/contact", <span className="text-lg leading-none">💬</span>, "Contact")}
 
             {isAuthenticated && (
               <>
-                <div className="border-t border-gray-100 dark:border-gray-800 my-1.5" />
-                <p className="text-[10px] font-semibold text-gray-400 dark:text-gray-600 uppercase tracking-widest px-3 pb-1 pt-1">
+                <div className="border-t border-gray-100 dark:border-gray-800 my-2.5" />
+                <p className="text-[11px] font-semibold text-gray-400 dark:text-gray-600 uppercase tracking-widest px-4 pb-2 pt-2">
                   Shopping
                 </p>
-                {mobileLink("/cart", <ShoppingCart size={18} strokeWidth={1.8} />, "Cart", cartCount)}
-                {mobileLink("/orders", <Package size={18} strokeWidth={1.8} />, "Orders", confirmedCount)}
+                {mobileLink("/cart", <ShoppingCart size={20} strokeWidth={1.8} />, "Cart", cartCount)}
+                {mobileLink("/orders", <Package size={20} strokeWidth={1.8} />, "Orders", confirmedCount)}
               </>
             )}
 
-            <div className="border-t border-gray-100 dark:border-gray-800 my-1.5" />
-            <p className="text-[10px] font-semibold text-gray-400 dark:text-gray-600 uppercase tracking-widest px-3 pb-1 pt-1">
+            <div className="border-t border-gray-100 dark:border-gray-800 my-2.5" />
+            <p className="text-[11px] font-semibold text-gray-400 dark:text-gray-600 uppercase tracking-widest px-4 pb-2 pt-2">
               Account
             </p>
 
             {!isAuthenticated ? (
               <>
-                {mobileLink("/login", <User size={18} strokeWidth={1.8} />, "Login")}
+                {mobileLink("/login", <User size={20} strokeWidth={1.8} />, "Login")}
                 <Link
                   to="/verify-email"
                   onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-center bg-amber-800 hover:bg-amber-900 text-amber-50 font-medium py-3 px-4 rounded-xl transition-all text-sm mt-2"
+                  className="flex items-center justify-center bg-amber-800 hover:bg-amber-900 text-amber-50 font-medium py-3 px-4 rounded-xl transition-all text-base mt-3"
                 >
                   Create account
                 </Link>
@@ -293,24 +301,24 @@ function Navbar() {
             ) : (
               <>
                 {/* User card */}
-                <div className="flex items-center gap-3 px-3 py-3 bg-amber-50 dark:bg-amber-950 rounded-xl mb-0.5">
-                  <span className="w-9 h-9 rounded-full bg-white dark:bg-gray-800 border border-amber-300 dark:border-amber-700 flex items-center justify-center text-sm font-semibold text-amber-800 dark:text-amber-300 flex-shrink-0">
+                <div className="flex items-center gap-3 px-4 py-4 bg-amber-50 dark:bg-amber-950 rounded-xl mb-1">
+                  <span className="w-10 h-10 rounded-full bg-white dark:bg-gray-800 border border-amber-300 dark:border-amber-700 flex items-center justify-center text-base font-semibold text-amber-800 dark:text-amber-300 flex-shrink-0">
                     {userInitials}
                   </span>
                   <div className="overflow-hidden">
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">{user?.name || "N/A"}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user?.email || "N/A"}</p>
+                    <p className="text-base font-semibold text-gray-900 dark:text-white truncate">{user?.name || "N/A"}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{user?.email || "N/A"}</p>
                   </div>
                 </div>
 
-                {mobileLink("/profile", <User size={18} strokeWidth={1.8} />, "My profile")}
-                {isAdmin && mobileLink("/admin/dashboard", <Settings size={18} strokeWidth={1.8} />, "Admin dashboard")}
+                {mobileLink("/profile", <User size={20} strokeWidth={1.8} />, "My profile")}
+                {isAdmin && mobileLink("/admin/dashboard", <Settings size={20} strokeWidth={1.8} />, "Admin dashboard")}
 
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950 transition-all font-medium text-base mt-0.5"
+                  className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950 transition-all font-medium text-base mt-1"
                 >
-                  <LogOut size={18} strokeWidth={1.8} className="flex-shrink-0" />
+                  <LogOut size={20} strokeWidth={1.8} className="flex-shrink-0" />
                   Logout
                 </button>
               </>

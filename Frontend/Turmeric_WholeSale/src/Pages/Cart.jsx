@@ -118,6 +118,7 @@ function Cart() {
                         </label>
 
                         <input
+                        disabled
                           type="number"
                           min="1"
                           value={product.quantity}
@@ -140,7 +141,7 @@ function Cart() {
                   {/* Price */}
                   <div className="text-left sm:text-right">
                     <p className="text-2xl font-semibold text-yellow-700 mb-2">
-                      $
+                      ₹
                       {(unitPrice * product.quantity).toFixed(2)}
                     </p>
 
@@ -171,7 +172,7 @@ function Cart() {
                 <div className="flex justify-between text-gray-600">
                   <span>Subtotal</span>
                   <span>
-                    ${totalPrice.toFixed(2)}
+                    ₹{totalPrice.toFixed(2)}
                   </span>
                 </div>
 
@@ -186,7 +187,7 @@ function Cart() {
                   <span>Total</span>
 
                   <span className="text-2xl text-yellow-700">
-                    ${totalPrice.toFixed(2)}
+                    ₹{totalPrice.toFixed(2)}
                   </span>
                 </div>
 
